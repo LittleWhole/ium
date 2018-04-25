@@ -1,10 +1,11 @@
 const botconfig = require("./botconfig.json");
+const tokens = require("./tokens.json");
 const Discord = require("discord.js");
 const fs = require("fs");
 const bot = new Discord.Client({disableEveryone: true});
 const ytdl = require('ytdl-core');
 const DBL = require("dblapi.js");
-const dbl = new DBL(botconfig.dbltoken, bot);
+const dbl = new DBL(tokens.dbltoken, bot);
 let version = botconfig.version;
 let iumics = require("./data/money.json");
 let xp = require("./data/xp.json");
@@ -328,4 +329,4 @@ bot.on('message', msg => {
 });
 
 
-bot.login(botconfig.token);
+bot.login(tokens.token);
