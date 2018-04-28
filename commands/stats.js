@@ -23,6 +23,9 @@ exports.run = (bot, message, args) => {
       }
     });
 
+    let users = 0;
+    bot.guilds.map(g => users += g.memberCount);
+
     let botEmbed = new Discord.RichEmbed()
 
     .setDescription("Bot Information", )
@@ -31,7 +34,7 @@ exports.run = (bot, message, args) => {
     .addField("Name", bot.user.username, true)
     .addField("Current Version", botconfig.version, true)
     .addField("Born On", bot.user.createdAt)
-    .addField('Online Users', + usersize + ' online  users', true)
+    .addField('Users', + users + ' users', true)
     .addField("Servers", `${bot.guilds.size} servers.`, true)
     .addField("Text channels", text_channels, true)
     .addField("Voice Channels", voice_channels, true)

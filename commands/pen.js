@@ -2,7 +2,7 @@ const Discord = require("discord.js")
 let playing = require("../data/playing.json")
 let pens = "9";
 
-module.exports.run = (bot, message, args) => {
+exports.run = (bot, message, args) => {
 
   if(!playing[message.author.id]) {
     playing[message.author.id] = {
@@ -28,6 +28,7 @@ module.exports.run = (bot, message, args) => {
        playing[user] = {
         playing: 'pen',
         pen: 9
+      }
      }
 
      let penCount = 0;
@@ -41,7 +42,7 @@ module.exports.run = (bot, message, args) => {
      .setColor("#77c9ff")
      .setDescription(`${penShow}`);
      return message.channel.send(penGameEmbed)
-   }
+  }
 
    if(args[0] == "stop" || args[0] == "end"){
 
@@ -90,7 +91,7 @@ module.exports.run = (bot, message, args) => {
   		  return;
   	  }
 
-      playing[MAID].pens = playing[user].pens - penBot;
+      playing[user].pens = playing[user].pens - penBot;
       let penCountBot = 0;
       let penShowBot = '🖊';
 
@@ -120,7 +121,6 @@ module.exports.run = (bot, message, args) => {
       .setFooter(`Pens - ${playing[user].pens}`, user.displayAvatarURL)
       .setTimestamp();
       message.channel.send(penGameEmbed)
-
     }
 
 
@@ -238,5 +238,9 @@ module.exports.run = (bot, message, args) => {
     if(parseInt(args[0]) !== "1" || parseInt(args[0]) !== "2" || parseInt(args[0]) !== "3"){
       return message.channel.send("**You may only take 1, 2, or 3 pens at once!** (Need help? Type: `ium pen`)");
     }
-  }
 }
+
+module.exports.help = {
+    name: "pen"
+}
+  
