@@ -30,12 +30,17 @@ fs.readdir("./commands/", (err, files) => {
 
 
 bot.on("ready", () => {
+
+	let users = 0;
+    bot.guilds.map(g => users += g.memberCount);
+
 	//PuTTy
 	console.log(`${bot.user.username} is online`);
-	console.log(`${bot.user.tag} running on ${bot.guilds.size} guilds with ${bot.users.size} users.`);
+	console.log(`${bot.user.tag} running on ${bot.guilds.size} guilds with ${users} users.`);
 
+	
 	//Activity
-	bot.user.setActivity(`ium help | ${botconfig.version} RIP CPU`);
+	bot.user.setActivity(`ium help | ${users} users`);
 
 	//Restart Logs
 	let restartEmbed = new Discord.RichEmbed()
@@ -249,22 +254,24 @@ bot.on("message", message => {
 		coolDown.delete(message.author.id)
 	}, coolSeconds * 1000)
 });
-/** bot.on('message', async msg => {
+
+bot.on('message', async msg => {
 	if(msg.author.bot) return undefined;
 	if(!msg.content.startsWith(ciprefix)) return undefined;
 	const args = msg.content.split(` `);
 
 	if(msg.content.startsWith(`${ciprefix}play`)) {
-		const user = message.author;
 		const voiceChannel = msg.member.voiceChannel;
 		if(!voiceChannel) return msg.channel.send(`**You must be in a voice channel to play music.**`);
-		const permissions = voiceChannel.permissionsFor(msg.bot.user);
+		/** 
+		const permissions = voiceChannel.permissionsFor(bot.user.msg);
 		if(!permissions.has(`CONNECT`)) {
 			return msg.channel.send('**I do not have permission to connect to your voice channel.** Make sure that I have the permission, `CONNECT`');
 		}
 		if(!permissions.has(`SPEAK`)) {
 			return msg.channel.send('**I do not have permission to speak in your voice channel.** Make sure that I have the permission, `SPEAK`');
 		}
+		*/
 
 		try {
 			var connection = await voiceChannel.join();
@@ -273,7 +280,7 @@ bot.on("message", message => {
 			return msContentScript.channel.send('Action unsuccessful - ${error}')
 		} 
 
-		const dispacher = connection.playStream(ytdl(args[1]))
+		const dispacher = connection.playStream(ytdl(args[2]))
 			.on('end', () => {
 				console.log('Song ended.');
 				voiceChannel.leave();
@@ -284,7 +291,7 @@ bot.on("message", message => {
 		dispatcher.setVolumeLogarithmic(5 / 5);
 	}
 });
-*/
+
 
 /**
 const commands = {
