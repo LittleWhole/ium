@@ -45,6 +45,7 @@ bot.on("ready", () => {
 
 	bot.channels.filter(c => c.id === '434521909745549333').forEach(channel => channel.send(restartEmbed).then(message => {message.delete(20000)}))
 });
+/** */
 
 bot.on('guildCreate', guild => {
 
@@ -248,7 +249,44 @@ bot.on("message", message => {
 		coolDown.delete(message.author.id)
 	}, coolSeconds * 1000)
 });
+/** bot.on('message', async msg => {
+	if(msg.author.bot) return undefined;
+	if(!msg.content.startsWith(ciprefix)) return undefined;
+	const args = msg.content.split(` `);
 
+	if(msg.content.startsWith(`${ciprefix}play`)) {
+		const user = message.author;
+		const voiceChannel = msg.member.voiceChannel;
+		if(!voiceChannel) return msg.channel.send(`**You must be in a voice channel to play music.**`);
+		const permissions = voiceChannel.permissionsFor(msg.bot.user);
+		if(!permissions.has(`CONNECT`)) {
+			return msg.channel.send('**I do not have permission to connect to your voice channel.** Make sure that I have the permission, `CONNECT`');
+		}
+		if(!permissions.has(`SPEAK`)) {
+			return msg.channel.send('**I do not have permission to speak in your voice channel.** Make sure that I have the permission, `SPEAK`');
+		}
+
+		try {
+			var connection = await voiceChannel.join();
+		} catch (error) {
+			console.error(`Action unsuccessful - ${error}`);
+			return msContentScript.channel.send('Action unsuccessful - ${error}')
+		} 
+
+		const dispacher = connection.playStream(ytdl(args[1]))
+			.on('end', () => {
+				console.log('Song ended.');
+				voiceChannel.leave();
+			})
+			.on('error', () => {
+				console.log(error);
+			})
+		dispatcher.setVolumeLogarithmic(5 / 5);
+	}
+});
+*/
+
+/**
 const commands = {
 	'play': (msg) => {
 		if (queue[msg.guild.id] === undefined) return msg.channel.send(`Add some songs to the queue first with ${ciprefix}add`);
@@ -327,6 +365,7 @@ bot.on('message', msg => {
 	if (!msg.content.startsWith(ciprefix)) return;
 	if (commands.hasOwnProperty(msg.content.toLowerCase().slice(ciprefix.length).split(' ')[0])) commands[msg.content.toLowerCase().slice(ciprefix.length).split(' ')[0]](msg);
 });
+*/
 
 
 bot.login(tokens.token);

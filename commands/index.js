@@ -1,11 +1,11 @@
-const botconfig = require("./botconfig.json");
+const config = require("./botconfig.json");
 const Discord = require("discord.js");
 const fs = require("fs");
 const bot = new Discord.Client({disableEveryone: true});
 const ytdl = require('ytdl-core');
 const DBL = require("dblapi.js");
-const dbl = new DBL(botconfig.dbltoken, bot);
-let version = botconfig.version;
+const dbl = new DBL(config.dbltoken, bot);
+let version = config.version;
 let iumics = require("./data/money.json");
 let xp = require("./data/xp.json");
 let coolDown = new Set();
@@ -15,7 +15,7 @@ let queue = {};
 
 const newUsers = new Discord.Collection();
 bot.commands = new Discord.Collection();
-let prefix = botconfig.prefix;
+let prefix = config.prefix;
 let ciprefix = prefix.toLowerCase();
 
 fs.readdir("./commands/", (err, files) => {
@@ -34,7 +34,7 @@ bot.on("ready", () => {
 	console.log(`${bot.user.tag} running on ${bot.guilds.size} guilds with ${bot.users.size} users.`);
 
 	//Activity
-	bot.user.setActivity(`ium help | ${botconfig.version} RIP CPU`);
+	bot.user.setActivity(`ium help | ${config.version} RIP CPU`);
 
 	//Restart Logs
 	let restartEmbed = new Discord.RichEmbed()
@@ -264,7 +264,7 @@ const commands = {
 				msg.member.voiceChannel.leave();
 			});
 			msg.channel.send(`Now Playing: **${song.title}**, requested by: **${song.requester}**`);
-			dispatcher = msg.guild.voiceConnection.playStream(ytdl(song.url, { audioonly: true }), { passes : botconfig.passes });
+			dispatcher = msg.guild.voiceConnection.playStream(ytdl(song.url, { audioonly: true }), { passes : config.passes });
 			let collector = msg.channel.createCollector(m => m);
 			collector.on('message', m => {
 				if (m.content.startsWith(ciprefix + 'pause')) {
@@ -328,4 +328,4 @@ bot.on('message', msg => {
 });
 
 
-bot.login(botconfig.token);
+bot.login(config.token);

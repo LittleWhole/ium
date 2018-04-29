@@ -1,8 +1,8 @@
 const Discord = require("discord.js");
 const moment = require("moment");
 require("moment-duration-format");
-const botconfig = require("../botconfig.json");
-let version = botconfig.version;
+const config = require("../botconfig.json");
+let version = config.version;
 
 
 exports.run = async (bot, message, args) => {

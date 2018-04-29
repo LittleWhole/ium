@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const botconfig = require("../botconfig");
+const config = require("../botconfig.json");
 let xp = require("../data/xp.json");
 let iumics = require("../data/money.json");
 

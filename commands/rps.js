@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const rps = ["rock", "paper", "scissors"];
 let iumics = require("../data/money.json");
-const botconfig = require('../botconfig.json');
+const config = require('../botconfig.json');
 const fs = require('fs');
 
 exports.run = (message, args, bot) => {

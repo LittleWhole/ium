@@ -1,8 +1,8 @@
 const Discord = require("discord.js");
 const moment = require("moment");
 require("moment-duration-format");
-const botconfig = require("../botconfig.json");
-let version = botconfig.version;
+const config = require("../botconfig.json");
+let version = config.version;
 const os = require('os');
 const osu = require('os-utils');
 
@@ -32,7 +32,7 @@ exports.run = (bot, message, args) => {
     .setColor('#000000')
     .setThumbnail(botAvatar)
     .addField("Name", bot.user.username, true)
-    .addField("Current Version", botconfig.version, true)
+    .addField("Current Version", config.version, true)
     .addField("Born On", bot.user.createdAt)
     .addField('Users', + users + ' users', true)
     .addField("Servers", `${bot.guilds.size} servers.`, true)

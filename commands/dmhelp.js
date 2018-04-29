@@ -1,7 +1,7 @@
 const Discord = require ("discord.js");
 const fs = require("fs");
-const botconfig = require("../botconfig.json");
-let version = botconfig.version;
+const config = require("../botconfig.json");
+let version = config.version;
 let inline = true
 
 module.exports.run = (bot, message, args) => {
@@ -62,7 +62,7 @@ module.exports.run = (bot, message, args) => {
     .setAuthor("ium", "https://ium-bot.github.io/ium.jpg")
     .setColor('#000000')
     .setThumbnail(botAvatar)
-    .setDescription("**Developer**: Tetra#4616 | **Version:** " + botconfig.version + " | **Library:** discord.js\nium is an aesthetic, simple, multi-purpose discord bot that has many commands, ranging from moderation commands to fun commands.")
+    .setDescription("**Developer**: Tetra#4616 | **Version:** " + config.version + " | **Library:** discord.js\nium is an aesthetic, simple, multi-purpose discord bot that has many commands, ranging from moderation commands to fun commands.")
     .addField("Website", "https://ium-bot.github.io", inline)
     .addField("Invite", "https://ium-bot.github.io/invite", inline)
     .addField("Server", "https://discord.gg/Ac8HYtD", inline)
