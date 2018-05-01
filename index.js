@@ -265,7 +265,7 @@ bot.on('message', async (msg) => {
 	if(!msg.content.startsWith(ciprefix)) return undefined;
 	const args = msg.content.split(' ');
 	const searchString = args.slice(1).join(' ');
-	const url = args[1].repeat(/<(.+)/g, `$1`)
+	const url = args[1] ? args[1].replace(/<(.+)>/g, '$1') : '';
 	const serverQueue = queue.get(msg.guild.id)
 
 
@@ -283,54 +283,48 @@ bot.on('message', async (msg) => {
 		}
 		*/
 
-		try {
-			var video = await youtube.getVideo(url);
-		} catch (error) {
-			try {
-				var videos = await youtube.searchVideos(searchString, 1);
-				var video = await youtube.getVideoByID(videos[0].id);
-			} catch (err) {
-				console.error(err);
-				return msg.channel.send('I could not obtain any search results.');
+		if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
+			const playlist = await youtube.getPlaylist(url);
+			const videos = await playlist.getVideos();
+			for (const video of Object.values(videos)) {
+				const video2 = await youtube.getVideoByID(video.id);
+				await handleVideo(video2, msg, voiceChannel, true); 
 			}
-		}
-		console.log(video);
-		const song = {
-			id: video.id,
-			title: video.title,
-			url: `https://www.youtube.com/watch?v=${video.id}`
-		};
-
-		if(!serverQueue) {
-			const queueConstruct = {
-				textChannel: msg.channel,
-				voiceChannel: voiceChannel,
-				connection: null,
-				songs: [],
-				volume: 5,
-				playing: true
-			};
-			queue.set(msg.guild.id, queueConstruct);
-
-			queueConstruct.songs.push(song);
-
-			try {
-				var connection = await voiceChannel.join();
-				queueConstruct.connection = connection;
-				play(msg.guild, queueConstruct.songs[0]);
-			} catch (error) {
-				console.error(`Action unsuccessful - ${error}`);
-				queue.delete(msg.guild.id);
-				return msg.channel.send(`Action unsuccessful - ${error}`)
-			} 
+			return msg.channel.send(`Playlist: **${playlist.title}** has been added to the queue!`);
 		} else {
-			serverQueue.songs.push(song);
-			console.log(serverQueue.songs)
-			return msg.channel.send(`**${song.title}** has been added to the queue.`)
+			try {
+				var video = await youtube.getVideo(url);
+			} catch (error) {
+				try {
+					var videos = await youtube.searchVideos(searchString, 10);
+
+					let index = 0;
+					let selectionEmbed = new Discord.RichEmbed()
+					.setAuthor(`Song Selection - Type the value of a song to select a result.`, "https://ium-bot.github.io/ium.jpg")
+					.setColor("#bf8aff")
+					.setDescription(`${videos.map(video2 => `**${++index} -** ${video2.title}`).join('\n')}`)
+					.setFooter(`Command cancels in 10 seconds.`);
+					msg.channel.send(selectionEmbed);
+					try {
+						var response = await msg.channel.awaitMessages(msg2 => msg2.content > 0 && msg2.content < 11, {
+							maxMatches: 1,
+							time: 10000,
+							errors: ['time']
+						});
+					} catch (err) {
+						console.error(err);
+						return msg.channel.send(`**Command canceled due to no value or invalid value provided.**`).then(message => {message.delete(20000)});
+					}
+					const videoIndex = (response.first().content);
+					var video = await youtube.getVideoByID(videos[videoIndex - 1].id);
+				} catch (err) {
+					console.error(err);
+					return msg.channel.send('**I could not obtain any search results.**').then(message => {message.delete(20000)});;
+				}
+			}
+
+			return handleVideo(video, msg, voiceChannel);
 		}
-
-		return;
-
 	} else if(msg.content.startsWith(`${ciprefix}skip`)) {
 		if(!msg.member.voiceChannel) return msg.channel.send(`**You must be in a voice channel to use this command.**`);
 		if(!serverQueue) return msg.channel.send(`**I cannot skip because nothing is playing.**`)
@@ -357,11 +351,12 @@ bot.on('message', async (msg) => {
 		if(!serverQueue) return msg.channel.send(`**There is nothing playing.**`);
 		return msg.channel.send(`Now playing - **${serverQueue.songs[2].title}**`);
 	} else if(msg.content.startsWith(`${ciprefix}queue`)){
+		let index = 0;
 		if(!serverQueue) return msg.channel.send(`**There are no songs in the queue.**`);
 		let queueEmbed = new Discord.RichEmbed()
 		.setAuthor(`Queue - ${msg.guild.name}`, "https://ium-bot.github.io/ium.jpg")
 		.setColor("#bf8aff")
-		.setDescription(`${serverQueue.songs.map(song => `${song.title}`).join('\n')}`)
+		.setDescription(`${serverQueue.songs.map(song => `**${++index} -** ${song.title}`).join('\n')}`)
 		.setFooter(`Now Playing - ${serverQueue.songs[0].title}`);
 		return msg.channel.send(queueEmbed);
 } /**else if(msg.content.startsWith(`${ciprefix}pause`)){
@@ -382,6 +377,45 @@ bot.on('message', async (msg) => {
 
 	return;
 });
+
+async function handleVideo(video, msg, voiceChannel, playlist = false) {
+	const serverQueue = queue.get(msg.guild.id);
+	console.log(video);
+	const song = {
+		id: video.id,
+		title: Util.escapeMarkdown(video.title),
+		url: `https://www.youtube.com/watch?v=${video.id}`
+	};
+	if(!serverQueue) {
+		const queueConstruct = {
+			textChannel: msg.channel,
+			voiceChannel: voiceChannel,
+			connection: null,
+			songs: [],
+			volume: 5,
+			playing: true
+		};
+		queue.set(msg.guild.id, queueConstruct);
+
+		queueConstruct.songs.push(song);
+
+		try {
+			var connection = await voiceChannel.join();
+			queueConstruct.connection = connection;
+			play(msg.guild, queueConstruct.songs[0]);
+		} catch (error) {
+			console.error(`Action unsuccessful - ${error}`);
+			queue.delete(msg.guild.id);
+			return msg.channel.send(`Action unsuccessful - ${error}`)
+		} 
+	} else {
+		serverQueue.songs.push(song);
+		console.log(serverQueue.songs)
+		if(playlist) return;
+		else return msg.channel.send(`**${song.title}** has been added to the queue.`)
+	}
+	return;
+}
 
 function play(guild, song) {
 	const serverQueue = queue.get(guild.id);
