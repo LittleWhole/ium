@@ -268,6 +268,9 @@ bot.on('message', async (msg) => {
 	const url = args[1] ? args[1].replace(/<(.+)>/g, '$1') : '';
 	const serverQueue = queue.get(msg.guild.id)
 
+	let command = msg.content.toLowerCase().split(' ')[0];
+	command = command.slice(ciprefix.length)
+
 
 	if(msg.content.startsWith(`${ciprefix}play`)) {
 		const voiceChannel = msg.member.voiceChannel;
@@ -303,12 +306,12 @@ bot.on('message', async (msg) => {
 					.setAuthor(`Song Selection - Type the value of a song to select a result.`, "https://ium-bot.github.io/ium.jpg")
 					.setColor("#bf8aff")
 					.setDescription(`${videos.map(video2 => `**${++index} -** ${video2.title}`).join('\n')}`)
-					.setFooter(`Command cancels in 10 seconds.`);
+					.setFooter(`Command cancels in 30 seconds.`);
 					msg.channel.send(selectionEmbed);
 					try {
 						var response = await msg.channel.awaitMessages(msg2 => msg2.content > 0 && msg2.content < 11, {
 							maxMatches: 1,
-							time: 10000,
+							time: 30000,
 							errors: ['time']
 						});
 					} catch (err) {
@@ -341,7 +344,10 @@ bot.on('message', async (msg) => {
 		if(!msg.member.voiceChannel) return msg.channel.send(`**You must be in a voice channel to use this command.**`);
 		if(!serverQueue) return msg.channel.send(`**You must play something to use this command.**`)
 		if(!args[2]) return msg.channel.send(`The current volume is **${serverQueue.volume}**`)
-		if (isNaN(args[2])) return msg.channel.send(`**Not a valid number.**`)
+		if(isNaN(args[2])) return msg.channel.send(`**Not a valid number.**`)
+		if(args[2] > 10 || args[2] < 0){
+			return msg.channel.send(`**Your value can only be between 0-10.**`)
+		}
 		serverQueue.volume = args[2];
 		serverQueue.connection.dispatcher.setVolumeLogarithmic(args[2] / 5);
 		msg.channel.send(`Volume - **${args[2]}**`)
@@ -349,7 +355,7 @@ bot.on('message', async (msg) => {
 	} else if(msg.content.startsWith(`${ciprefix}np`) || msg.content.startsWith(`${ciprefix}playing`) || msg.content.startsWith(`${ciprefix}nowplaying`)){
 		//if(!msg.member.voiceChannel) return msg.channel.send(`**You must be in a voice channel to use this command.**`);
 		if(!serverQueue) return msg.channel.send(`**There is nothing playing.**`);
-		return msg.channel.send(`Now playing - **${serverQueue.songs[2].title}**`);
+		return msg.channel.send(`🎶 Now playing - **${serverQueue.songs[0].title}**`);
 	} else if(msg.content.startsWith(`${ciprefix}queue`)){
 		let index = 0;
 		if(!serverQueue) return msg.channel.send(`**There are no songs in the queue.**`);
@@ -359,21 +365,19 @@ bot.on('message', async (msg) => {
 		.setDescription(`${serverQueue.songs.map(song => `**${++index} -** ${song.title}`).join('\n')}`)
 		.setFooter(`Now Playing - ${serverQueue.songs[0].title}`);
 		return msg.channel.send(queueEmbed);
-} /**else if(msg.content.startsWith(`${ciprefix}pause`)){
-		if(serverQueue && serverQueue.playing) {
+	} else if (msg.content.startsWith(`${ciprefix}pause`)) {
+		if (serverQueue) {
 			serverQueue.connection.dispatcher.pause();
-			msg.channel.send(`Paused - **${serverQueue.songs[0].title}**`)
-			return serverQueue.playing = false;
-		} 
-		return msg.channel.send(`**There is nothing that is playing to pause.**`);
-	} else if(msg.content.startsWith(`${ciprefix}resume`)){
-		if(serverQueue && !serverQueue.playing) {
-			serverQueue.connection.dispatcher.resume();
-			msg.channel.send(`Resumed - **${serverQueue.songs[0].title}**`)
-			return serverQueue.playing = true;
+			return msg.channel.send(`⏸ Paused - **${serverQueue.songs[0].title}**`);
 		}
-		return msg.channel.send(`**There is nothing that is playing to resume.**`);
-	}*/
+		return msg.channel.send('There is nothing playing to pause.');
+	} else if (msg.content.startsWith(`${ciprefix}resume`)) {
+		if (serverQueue) {
+			serverQueue.connection.dispatcher.resume();
+			return msg.channel.send(`▶ Resumed - **${serverQueue.songs[0].title}**`);
+		}
+		return msg.channel.send('There is nothing playing to resume.');
+	}
 
 	return;
 });

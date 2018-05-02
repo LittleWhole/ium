@@ -28,8 +28,9 @@ exports.run = async (bot, message, args) => {
                 .addField("Status", `${status[member.user.presence.status]}`, inline, true)
                 .addField("Playing", `${member.user.presence.game ? `${member.user.presence.game.name}` : "User currently not playing anything"}`,inline, true)
                 .addField("Roles", `${member.roles.filter(r => r.id !== message.guild.id).map(roles => `\`${roles.name}\``).join(" **|** ") || "User has no roles"}`, true)
+                .addField('Last Message', message.author.lastMessage)
                 .addField("Joined Discord", member.user.createdAt)
-                .setFooter(`Information about ${member.user.username}`)
+                .setFooter(`Information about ${member.user.username} | Requested by ${message.author.tag}`)
                 .setTimestamp()
 
             message.channel.send(embed);
