@@ -26,6 +26,9 @@ let inline = true;
 let volumeValue = 5;
 const queue = new Map ();
 
+const { Client } = require('idiotic-api');
+bot.IdioticAPI = new Client(tokens.token || 'token', { dev: true });
+
 const newUsers = new Discord.Collection();
 bot.commands = new Discord.Collection();
 let prefix = botconfig.prefix;
