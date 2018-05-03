@@ -1,3 +1,6 @@
+//Check Node Version
+if (process.version.slice(1).split(".")[0] < 8) throw new Error("Node 8.0.0 or higher is required. Update Node on your system.");
+
 const botconfig = require("./botconfig.json");
 const tokens = require("./tokens.json");
 const GOOGLE_API_KEY = tokens.youtubekey;
@@ -10,6 +13,10 @@ const YouTube = require('simple-youtube-api');
 const DBL = require("dblapi.js");
 const dbl = new DBL(tokens.dbltoken, bot);
 const youtube = new YouTube(GOOGLE_API_KEY);
+const { promisify } = require("util");
+const readdir = promisify(require("fs").readdir);
+const Enmap = require("enmap");
+const EnmapLevel = require("enmap-level");
 let version = botconfig.version;
 let iumics = require("./data/money.json");
 let xp = require("./data/xp.json");
@@ -32,84 +39,18 @@ fs.readdir("./commands/", (err, files) => {
 	  bot.on(eventName, (...args) => eventFunction.run(bot, ...args));
 	});
   });
-
-
-bot.on("ready", () => {
-
-	let users = 0;
-    bot.guilds.map(g => users += g.memberCount);
-
-	//PuTTy
-	console.log(`${bot.user.username} is online`);
-	console.log(`${bot.user.tag} running on ${bot.guilds.size} guilds with ${users} users.`);
-
-	
-	//Activity
-	bot.user.setActivity(`ium help | ${users} users`);
-
-	//Restart Logs
-	let restartEmbed = new Discord.RichEmbed()
-	.setColor('#f5a3fa')
-	.setDescription("ium has **restarted**")
-	.setTimestamp();
-
-	bot.channels.filter(c => c.id === '434521909745549333').forEach(channel => channel.send(restartEmbed).then(message => {message.delete(20000)}))
-});
-/** */
-
-bot.on('guildCreate', guild => {
-
-	const verlvl = {
-			0: "None",
-			1: "Low",
-			2: "Medium",
-			3: "(╯°□°）╯︵ ┻━┻",
-			4: "(ノಠ益ಠ)ノ彡┻━┻"
-		}
-
-	let sicon = guild.iconURL;
-	let guildEmbed = new Discord.RichEmbed()
-	.setAuthor("ium", "https://ium-bot.github.io/ium.jpg")
-	.setColor('#f5a3fa')
-	.setThumbnail(sicon)
-	.setDescription("ium has been **added** to a server :)")
-	.addField("Guild", `${guild}`, inline)
-	.addField("Users", `${guild.memberCount}`, inline)
-	.addField("Owner", guild.owner, inline)
-	.addField("Region", guild.region, inline)
-	.addField("Roles", guild.roles.size, inline)
-	.addField("Channels", guild.channels.size, inline)
-	.setFooter(`ID - ${guild.id}`)
-	.setTimestamp();
-
-  bot.channels.filter(c => c.id === '434521909745549333').forEach(channel => channel.send(guildEmbed));
-});
-
-bot.on('guildDelete', guild => {
-	const verlvl = {
-			0: "None",
-			1: "Low",
-			2: "Medium",
-			3: "(╯°□°）╯︵ ┻━┻",
-			4: "(ノಠ益ಠ)ノ彡┻━┻"
-		}
-
-	let sicon = guild.iconURL;
-	let guildEmbed = new Discord.RichEmbed()
-	.setColor('#34e7e4')
-	.setThumbnail(sicon)
-	.setDescription("ium has been **removed** from a server :(")
-	.addField("Guild", `${guild}`, inline)
-	.addField("Users", `${guild.memberCount}`, inline)
-	.addField("Owner", guild.owner, inline)
-	.addField("Region", guild.region, inline)
-	.addField("Roles", guild.roles.size, inline)
-	.addField("Channels", guild.channels.size, inline)
-	.setFooter(`ID - ${guild.id}`)
-	.setTimestamp();
-
-	bot.channels.filter(c => c.id === '434521909745549333').forEach(channel => channel.send(guildEmbed));
-});
+  
+const init = async () => {
+  const evtFiles = await readdir("./events/");
+  //bot.logger.log(`Loading a total of ${evtFiles.length} events.`);
+  evtFiles.forEach(file => {
+    const eventName = file.split(".")[0];
+    const event = require(`./events/${file}`);
+    bot.on(eventName, event.bind(null, bot));
+    delete require.cache[require.resolve(`./events/${file}`)];
+  });
+}
+init();
 
 bot.on('warn', console.warn);
 
@@ -119,31 +60,7 @@ bot.on('disconnect', () => console.log('Disconnecting...'));
 
 bot.on('reconnecting', () => console.log('Reconnecting...'));
 
-bot.on('guildMemberAdd', member => {
-  const channel = member.guild.channels.find('name', "ium-events");
-  if (!channel) return;
-	//Embed Creation
-	let memberEmbed = new Discord.RichEmbed()
-	.setColor('#a193ff')
-	.setDescription(`**${member}** has joined`)
-	.setFooter(`ID - ${member.id}`)
-	.setTimestamp();
 
-  channel.send(memberEmbed);
-});
-
-bot.on('guildMemberRemove', member => {
-  const channel = member.guild.channels.find('name', "ium-events");
-  if (!channel) return;
-	//Embed Creation
-	let memberEmbed2 = new Discord.RichEmbed()
-	.setColor('#66545e')
-	.setDescription(`**${member}** has left`)
-	.setFooter(`ID - ${member.id}`)
-	.setTimestamp();
-
-  channel.send(memberEmbed2);
-});
 
 /**
 dbl.webhook.on('ready', hook => {
