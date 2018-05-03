@@ -16,7 +16,7 @@ exports.run = (bot, message, args) => {
   .setColor("#77c9ff")
   .addField("How To Play", "In the game you and me start out with 9 pens 🖊, and we take turns taking pens. In every turn you can take 1 pen, 2 pens, or 3 pens. The goal of the game is to make is to make you oponent have one pen left. When your opponent has one pen left you win!")
   .addField("Commands", "`ium pen start` - Starts game\n`ium pen 1` - Takes one pen\n`ium pen 2` - Takes two pens\n`ium pen 3` - Takes three Pens\n`ium pen stop` - Stops the game");
-   if(!args[0]) return  message.channel.send(penGameEmbed)
+   if(!args[0]) return message.channel.send(penGameEmbed);
 
    if(args[0] == "start"){
 
@@ -29,7 +29,6 @@ exports.run = (bot, message, args) => {
         playing: 'pen',
         pen: 9
       }
-     }
 
      let penCount = 0;
      let penShow = '🖊';
@@ -42,6 +41,7 @@ exports.run = (bot, message, args) => {
      .setColor("#77c9ff")
      .setDescription(`${penShow}`);
      return message.channel.send(penGameEmbed)
+    }
   }
 
    if(args[0] == "stop" || args[0] == "end"){
@@ -235,12 +235,5 @@ exports.run = (bot, message, args) => {
       message.channel.send(penGameEmbed)
     }
 
-    if(parseInt(args[0]) !== "1" || parseInt(args[0]) !== "2" || parseInt(args[0]) !== "3"){
-      return message.channel.send("**You may only take 1, 2, or 3 pens at once!** (Need help? Type: `ium pen`)");
-    }
-}
-
-module.exports.help = {
-    name: "pen"
-}
-  
+    if(parseInt(args[0]) !== "1" || parseInt(args[0]) !== "2" || parseInt(args[0]) !== "3") return message.channel.send("**You may only take 1, 2, or 3 pens at once!** (Need help? Type: `ium pen`)");
+  }

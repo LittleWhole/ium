@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 
-module.exports = bot => {
+module.exports = (bot, member) => {
     const channel = member.guild.channels.find('name', "ium-events");
     if (!channel) return;
       //Embed Creation
