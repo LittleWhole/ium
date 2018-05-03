@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const snekfetch = require('snekfetch');
-
+const superAgent = require("superagent");
 exports.run = async (bot, message, args) => {
 
   let{body} = await superAgent
