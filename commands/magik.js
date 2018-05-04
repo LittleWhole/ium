@@ -12,16 +12,12 @@ module.exports.run = async (bot, message, args) => {
         userAvatar = args.join(' ').replace(/gif|webp/g, 'png')
     }
 
-    let res = await snekfetch.get(`https://discord.services/api/magik?url=${avatarurl}`)
+    let res = await snekfetch.get(`https://discord.services/api/magik?url=${userAvatar}`)
 
-    if (res.body == 'some error sry :/') {
-            await wait.delete()
-            return message.channel.send('**Image was invalid.**')
-    } else {
             await wait.delete()
 
             const magikEmbed = new Discord.RichEmbed() 
-                .setImage(`https://discord.services/api/magik?url=${avatarurl}`); 
+                .setImage(`https://discord.services/api/magik?url=${userAvatar}`); 
             return message.channel.send(magikEmbed) 
-        }
+
 }
