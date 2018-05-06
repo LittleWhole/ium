@@ -19,4 +19,5 @@ module.exports = bot => {
 	.setTimestamp();
 
 	bot.channels.filter(c => c.id === '434521909745549333').forEach(channel => channel.send(restartEmbed).then(message => {message.delete(20000)}))
+	bot.channels.filter(c => c.id === '416294137118195742').forEach(channel => channel.send("I can still talk on the server without being on the server :thinking: But I can't view your messages though... \nHow is Shien doing?"));
   };
