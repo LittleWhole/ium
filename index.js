@@ -3,6 +3,7 @@ if (process.version.slice(1).split(".")[0] < 8) throw new Error("Node 8.0.0 or h
 
 const botconfig = require("./botconfig.json");
 const tokens = require("./tokens.json");
+const msgSent = require("./data/sent.json");
 const GOOGLE_API_KEY = tokens.youtubekey;
 const Discord = require("discord.js");
 const Util = require("discord.js");
@@ -24,6 +25,7 @@ let coolDown = new Set();
 let coolSeconds = 2;
 let inline = true;
 let volumeValue = 5;
+let curSent = 0;
 const queue = new Map ();
 
 const { Client } = require('idiotic-api');
@@ -140,6 +142,8 @@ bot.on("message", message => {
 		//coolDown.add(message.author.id);
 //	}
 
+	curSent = curSent + 1;
+	console.log(`${curSent}`);
 
 	//Currency
 	if(!iumics[message.author.id]){
