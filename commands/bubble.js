@@ -8,10 +8,11 @@ exports.run = async (client, message, args, tools) => {
     if (TotalBubbles === undefined) TotalBubbles = 1;
     db.add(`bubbles_${message.author.id}`, 1).then(i => {
         const emb = new Discord.RichEmbed()
-            .setTitle('Pop!')
+            .setAuthor("Pop!", message.author.displayAvatarURL)
             .setThumbnail('https://images-na.ssl-images-amazon.com/images/I/81hVR8PKVDL.png')
-            .setColor(0x00FFBF)
-            .setDescription(`You have popped a bubble from a bubble wrap!\nYou have totally popped: ${TotalBubbles + 1} bubbles!`)
+            .setColor("#77c9ff")
+            .setDescription(`You have popped a bubble from a bubble wrap!`)
+            .addField("Total Popped", `${TotalBubbles + 1} bubbles`);
         message.channel.send({
             embed: emb
         })
