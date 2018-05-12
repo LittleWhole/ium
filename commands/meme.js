@@ -1,18 +1,12 @@
+
 const Discord = require("discord.js");
-const randomPuppy = require("random-puppy");
+const meme = require('memejs');
 
-module.exports.run = async (bot, message, args) => {
-  
-   randomPuppy('memes')
-  .then(url => {
-                const memeEmbed = new Discord.RichEmbed()
-                    .setTimestamp()
-                    .setImage(url)
-                    .setColor(`#39E4FA`)
-                     message.channel.send(memeEmbed);
-  })
-}
-
-module.exports.help = {
-  name: "meme"
-}
+exports.run = async (bot, message, args, level) => {
+  meme(function(data) {
+  const embed = new Discord.RichEmbed()
+  .setTitle(data.title[0])
+  .setColor("RANDOM")
+  .setImage(data.url[0])
+  message.channel.send({embed});
+})};
