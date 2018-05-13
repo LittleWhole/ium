@@ -1,14 +1,20 @@
 const Discord = require("discord.js");
 
-module.exports = (bot, member) => {
-    const channel = member.guild.channels.find('name', "ium-events");
+module.exports = (bot, member, message) => {
+  try {
+    const channel = member.guild.channels.find('name', "arrivals");
     if (!channel) return;
-      //Embed Creation
-      let memberEmbed = new Discord.RichEmbed()
-      .setColor('#a193ff')
-      .setDescription(`**${member}** has joined`)
-      .setFooter(`ID - ${member.id}`)
-      .setTimestamp();
-  
-    channel.send(memberEmbed);
+            //Embed Creation
+            let memberEmbed = new Discord.RichEmbed()
+            .setColor('#90e386')
+            .setTitle(`User Joined`, member.displayAvatarURL)
+            .setDescription(`${member.user.username} - \`${member.user.tag}\` has **joined**`)
+            //.setFooter(`${message.guild.memberCount} users`)
+            .setTimestamp();
+        
+            channel.send(memberEmbed)
+  } catch (error) {
+    console.error(error);
+  }
+
   };
