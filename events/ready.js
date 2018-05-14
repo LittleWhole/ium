@@ -18,6 +18,6 @@ module.exports = bot => {
 	.setDescription("ium has **restarted**")
 	.setTimestamp();
 
-	bot.channels.filter(c => c.id === '434521909745549333').forEach(channel => channel.send(restartEmbed).then(message => {message.delete(20000)}))
+	bot.channels.filter(c => c.id === '434525130434150400').forEach(channel => channel.send(restartEmbed).then(message => {message.delete(20000)}))
 
   };
