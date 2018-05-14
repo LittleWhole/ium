@@ -19,5 +19,5 @@ module.exports = bot => {
 	.setTimestamp();
 
 	bot.channels.filter(c => c.id === '434525130434150400').forEach(channel => channel.send(restartEmbed).then(message => {message.delete(20000)}))
-z
+
   };
