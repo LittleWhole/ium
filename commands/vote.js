@@ -23,8 +23,8 @@ exports.run = async (bot, message, args, tools) => {
     .setTitle(poll)
 
     let m = await message.channel.send(announceEmbed);
-    await m.react(`✅`);
-    await m.react(`❌`);
+    await m.react(`<:check:314349398811475968>`);
+    await m.react(`<:xmark:314349398824058880>`);
 
 }
 

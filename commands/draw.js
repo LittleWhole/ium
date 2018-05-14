@@ -5,7 +5,7 @@ const {
 } = require("canvas-constructor");
 
 const zoomfactor = 10;
-const reactions = ["⬅", "➡", "⬆", "⬇", "✅", "🔏", "🖋"];
+const reactions = ["⬅", "➡", "⬆", "⬇", "<:check:314349398811475968>", "🔏", "🖋"];
 let channels = [];
 
 /**

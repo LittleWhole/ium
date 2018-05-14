@@ -9,10 +9,11 @@ exports.run = async (bot, message, args) => {
     let resence = true
 
     const status = {
-        online: "Online",
-        idle: "Idle",
-        dnd: "Do Not Disturb",
-        offline: "Offline/Invisible"
+        online: "Online <:online:313956277808005120>",
+        idle: "Idle <:away:313956277220802560>",
+        dnd: "Do Not Disturb <:dnd:313956276893646850>",
+        streaming: "<:streaming:313956277132853248>",
+        offline: "Offline/Invisible <:offline:313956277237710868>"
       }
 
     const member = message.mentions.members.first() || message.guild.members.get(args[0]) || message.member;
