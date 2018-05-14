@@ -2,7 +2,9 @@ const Discord = require("discord.js");
 
 exports.run = async (bot, message, args) => {
     try {
-        await message.react('<:discord:314003252830011395>');
+        await message.react('🇦');
+        await message.react('🇧');
+        await message.react('🇨');
     }
     catch(error) {
         
