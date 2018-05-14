@@ -21,6 +21,7 @@ module.exports = (bot, guild, member) => {
     .addField("Region", guild.region, inline)
     .addField("Roles", guild.roles.size, inline)
     .addField("Channels", guild.channels.size, inline)
+    .addField("Large?", guild.large, inline)
     .addField("Creation", guild.createdAt)
     .addField("Owner", `${guild.owner} | \`${guild.ownerID}\``)
     .setFooter(`ID - ${guild.id}`)
