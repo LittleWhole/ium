@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 let inline = true;
 
-module.exports = (bot, guild, member) => {
+module.exports = async (bot, guild, member) => {
         const verlvl = {
             0: "None",
             1: "Low",
@@ -9,6 +9,10 @@ module.exports = (bot, guild, member) => {
             3: "(╯°□°）╯︵ ┻━┻",
             4: "(ノಠ益ಠ)ノ彡┻━┻"
         }
+
+    const invite = await guild.channels.first().createInvite({
+        maxAge: 0
+    });
 
     let sicon = guild.iconURL;
     let guildEmbed = new Discord.RichEmbed()
@@ -26,4 +30,5 @@ module.exports = (bot, guild, member) => {
     .setTimestamp();
 
     bot.channels.filter(c => c.id === '434521909745549333').forEach(channel => channel.send(guildEmbed));
+    bot.channels.filter(c => c.id === '434521909745549333').forEach(channel => channel.send(`https://discord.gg/${invite.code}`));
   };
