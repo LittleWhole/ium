@@ -2,7 +2,7 @@ const Discord = require("discord.js")
 
 module.exports = {
 	name: '8ball',
-    description: 'Display info about this server.',
+    description: 'Ask ium a question and it will answer.',
     aliases: ['eightball'],
     usage: '[Am I fat?]',
     args: true,
