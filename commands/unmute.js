@@ -1,8 +1,9 @@
 const Discord = require("discord.js");
 const ms = require("ms");
+const errors = require("../utils/errors.js")
 
 module.exports.run = async (bot, message, args) => {
-    if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.sendMessage("**You don't have the premission to do that!**")
+    if(!message.member.hasPermission("MANAGE_MESSAGES")) return errors.noPerms(message, "unmute");
 
         let toMute = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
         if(!toMute) return message.channel.sendMessage("**Please mention an user or ID to mute.** `ium unmute <user id>`");

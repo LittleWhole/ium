@@ -1,7 +1,9 @@
 const Discord = require("discord.js")
+const errors = require("../utils/errors.js")
 
 module.exports.run = async (bot, message, args) => {
 
+    if(!message.member.hasPermission("BAN_MEMBERS")) return errors.noPerms(message, "unban");
     const reason = args.slice(1).join(' ');
     unban.unbanAuth = message.author;
     const user = args[0];

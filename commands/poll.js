@@ -1,5 +1,6 @@
 const send = require('quick.hook');
 const Discord = require('discord.js');
+const errors = require("../utils/errors.js")
 
 exports.run = async (bot, message, args, tools) => {
 
