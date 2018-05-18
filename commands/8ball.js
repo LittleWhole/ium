@@ -1,6 +1,8 @@
 const Discord = require("discord.js")
 
-module.exports.run = async (bot, message, args) => {
+module.exports = {
+	name: '8ball',
+	description: 'Display info about this server.',
 
    if(!args[1]) return message.channel.send("**Type a question with two or more words!** `ium 8ball Am I a furry`");
    let replies = ["Yes", "No", "I don't know", "Ask again later!", "Nope", "I am not sure!", "Pls No", "You tell me"];
@@ -10,7 +12,7 @@ module.exports.run = async (bot, message, args) => {
 
    let ballembed = new Discord.RichEmbed()
    .setAuthor(message.author.username)
-   .setColor("#000000")
+   .setColor("#000000") 
    .addField("Question", question)
    .addField("Answer", replies[result]);
 
