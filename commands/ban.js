@@ -1,8 +1,9 @@
 const Discord = require("discord.js")
+const errors = require("../utils/errors.js")
 
 exports.run = async (bot, message, args) => {
 
-if (!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send("**You do not have permission to do that.**");
+if (!message.member.hasPermission("BAN_MEMBERS")) return errors.noPerms(message, "ban");
 
     let member = message.mentions.members.first();
 
