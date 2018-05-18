@@ -2,15 +2,15 @@ const Discord = require("discord.js");
 const errors = require("../utils/errors.js")
 
 
-exports.run = async (bot, message, args, member) => {
+exports.run = async (bot, message, args) => {
     if(!message.member.hasPermission("KICK_MEMBERS")) return errors.noPerms(message, "kick");
-    
+    let member = message.mentions.members.first();
     let kickUser = message.mentions.members.first();
     if(!kickUser) message.channel.send("**User not found.** `ium kick <user>`");
 
     let reason = args.slice(1).join(' ');
 
-    await member.kick(reason)
+     member.kick(reason)
       .catch(error => message.channel.send(`Sorry, I couldn't kick because of : ${error}`));
 
     if(reason == null){
