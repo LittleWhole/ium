@@ -4,9 +4,9 @@ const ms = require("ms");
 
 exports.run = async (bot, message, args) => {
 
+  if(tomute.hasPermission("MANAGE_MESSAGES")) return errors.noPerms(message, "mute");
       let tomute = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
       if(!tomute) return message.channel.send("**User not found.** `ium mute <user> <time (optional)>`");
-      if(tomute.hasPermission("MANAGE_MESSAGES")) return message.channel.send("**You do not have permission to mute them!**");
       let muterole = message.guild.roles.find(`name`, "muted");
       //start of create role
       if(!muterole){
