@@ -1,7 +1,9 @@
 const Discord = require("discord.js");
+const errors = require("../utils/errors.js")
+
 
 module.exports.run = async (bot, message, args) => {
-  if(!message.member.hasPermissions("MANAGE_ROLES")) return message.reply("You do not have permission to do that!");
+  if(!message.member.hasPermissions("MANAGE_ROLES")) return errors.noPerms(message, "removerole");
   let rMember = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
   if(!rMember) return message.reply("User not found.");
   let role = args.join(" ").slice(22);

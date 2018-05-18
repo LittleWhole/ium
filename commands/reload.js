@@ -4,7 +4,7 @@ const errors = require("../utils/errors.js")
 
 module.exports.run = async (bot, message, args) => {
 
-    if (!['275831434772742144',].includes(message.author.id)) return message.reply('**You cant do that, only the bot developer can!**');
+    if (!['275831434772742144',].includes(message.author.id)) return errors.noTetra(message, "reload");
     try{
         delete require.cache[require.resolve(`./${args[0]}.js`)];
         let reloadE = new Discord.RichEmbed()
