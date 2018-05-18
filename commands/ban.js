@@ -7,7 +7,7 @@ if (!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send("*
     let member = message.mentions.members.first();
 
     if(!member)
-    return message.channel.send("**Please mention a user to ban.** `ium ban <user>``");
+    return message.channel.send("**Please mention a user to ban.** `ium ban <user>`");
 
     if(!member.bannable)
     return message.channel.send("**I cannot ban this user.** The user might have more permissions than me or, I do not have permission to ban them.");
