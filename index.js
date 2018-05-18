@@ -13,11 +13,15 @@ const ytdl = require('ytdl-core');
 const YouTube = require('simple-youtube-api');
 const DBL = require("dblapi.js");
 const dbl = new DBL(tokens.dbltoken, bot);
+const PlexiDevApi = require('plexibotsapi');
+const api = new PlexiDevApi(tokens.plexitoken);
 const youtube = new YouTube(GOOGLE_API_KEY);
 const { promisify } = require("util");
 const readdir = promisify(require("fs").readdir);
 const Enmap = require("enmap");
 const EnmapLevel = require("enmap-level");
+const Botspace = require('botlist.space');
+const botspace = new Botspace(botconfig.iumID, "6c9d38 4TRY THIS TIME :)1a76403b38fc2422e8973d636fbc9c289787a07fb1632000db654b6a19d0cdf");
 let version = botconfig.version;
 let iumics = require("./data/money.json");
 let xp = require("./data/xp.json");
@@ -27,6 +31,7 @@ let inline = true;
 let volumeValue = 5;
 let curSent = 0;
 const queue = new Map ();
+
 
 const { Client } = require('idiotic-api');
 bot.IdioticAPI = new Client(tokens.token || 'token', { dev: true });
@@ -89,6 +94,13 @@ dbl.webhook.on('vote', vote => {
 	bot.channels.filter(c => c.id === '434521909745549333').forEach(channel => channel.send(voteEmbed));
 });
 */
+
+botspace.postServerCount(bot.guilds.size).then(() => { 
+    console.log('Set the current bot\'s server count to ' + bot.guilds.size + ' guilds.');
+}).catch((e) => {
+	console.error('Failed to post server count. ' + e.code);
+	console.error(e);
+});
 
 bot.on("message", message => {
 	if (message.author.bot) return;
