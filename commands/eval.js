@@ -1,7 +1,8 @@
 const Discord = require("discord.js")
+const errors = require("../utils/errors.js")
 
 exports.run = (bot, message, args) => {
-    if(message.author.id !== '275831434772742144') return;
+    if(message.author.id !== '275831434772742144') return errors.noTetra(message, "eval");;
     function clean(text) {
       if (typeof(text) === "string")
         return text.replace(/'/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));

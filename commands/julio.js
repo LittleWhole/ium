@@ -1,4 +1,4 @@
-exports.run = async (client, message, args) => {
+exports.run = async (bot, message, args) => {
 
     if (message.member.voiceChannel) {
         message.channel.send('Now you will feel the experience of Julio...')

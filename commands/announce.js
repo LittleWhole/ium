@@ -1,10 +1,10 @@
 const send = require('quick.hook');
 const Discord = require('discord.js');
+const errors = require("../utils/errors.js")
 
 exports.run = (bot, message, args, tools) => {
 
-    if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send("You must have the permission **Manage Messages** to use this command.");
-
+    if(!message.member.hasPermission("MANAGE_MESSAGES")) return errors.noPerms(message, "announce");
     let split = '|';
 
     if(!args[0]) {

@@ -1,8 +1,9 @@
 const Discord = require("discord.js");
+const errors = require("../utils/errors.js")
 
 module.exports.run = async (bot, message, args) => {
 
-  if(!message.member.hasPermission("MANAGE_ROLES")) return message.channel.send("**You don't have premmsions to do that!**");
+  if(!message.member.hasPermission("MANAGE_ROLES")) return errors.noPerms(message, "addrole");
   let rMember = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
   if(!args[0]) return message.channel.send('**Mention a user, and type a role to give to the user.** `ium addrole <user> <role>`')
   if(!rMember) return message.channel.send("**User not found.** `ium addrole <user> <role>`");

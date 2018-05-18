@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const errors = require("../utils/errors.js")
 const ms = require("ms");
 
 exports.run = async (bot, message, args) => {

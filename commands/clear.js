@@ -1,9 +1,10 @@
 const Discord = require("discord.js");
 const config = require("../botconfig.json");
+const errors = require("../utils/errors.js")
 
 exports.run = async (bot, message, args) => {
 
-  if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send("**You do not have permission to do that.**");
+  if(!message.member.hasPermission("MANAGE_MESSAGES")) return errors.noPerms(message, "clear");
   if(!args[0]) return message.channel.send("**Specify an amount of messages for me to clear.** `ium clear [amount of messages to clear]` (Note: cannot clear more than 99 messages, cannot clear messages older than 2 weeks)");
 
   message.channel.bulkDelete(args[0]).then(() => {
