@@ -4,6 +4,7 @@ if (process.version.slice(1).split(".")[0] < 8) throw new Error("Node 8.0.0 or h
 const botconfig = require("./botconfig.json");
 const tokens = require("./tokens.json");
 const msgSent = require("./data/sent.json");
+const errors = require("./utils/errors.js")
 const GOOGLE_API_KEY = tokens.youtubekey;
 const Discord = require("discord.js");
 const Util = require("discord.js");
@@ -41,14 +42,25 @@ bot.commands = new Discord.Collection();
 let prefix = botconfig.prefix;
 let ciprefix = prefix.toLowerCase();
 
-fs.readdir("./commands/", (err, files) => {
-	if (err) return console.error(err);
-	files.forEach(file => {
-	  let eventFunction = require(`./commands/${file}`);
-	  let eventName = file.split(".")[0];
-	  bot.on(eventName, (...args) => eventFunction.run(bot, ...args));
+const commandFiles = fs.readdirSync('./commands');
+
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+	bot.commands.set(command.name, command);
+}
+
+const cooldowns = new Discord.Collection();
+
+	/** 
+	fs.readdir("./commands/", (err, files) => {
+		if (err) return console.error(err);
+		files.forEach(file => {
+		let eventFunction = require(`./commands/${file}`);
+		let eventName = file.split(".")[0];
+		bot.on(eventName, (...args) => eventFunction.run(bot, ...args));
+		});
 	});
-  });
+	*/
   
 const init = async () => {
   const evtFiles = await readdir("./events/");
@@ -103,8 +115,6 @@ botspace.postServerCount(bot.guilds.size).then(() => {
 });
 
 bot.on("message", message => {
-	if (message.author.bot) return;
-
 	//XP and Level System
 	let xpAdd = Math.floor(Math.random() * 7) + 8;
 	//console.log(xpAdd);
@@ -133,8 +143,62 @@ bot.on("message", message => {
 	  if(err) console.log(err)
 	});
 
+	if (message.author.bot) return;
 	if(message.content.toLowerCase().indexOf(ciprefix) !== 0) return;
 
+	const args = message.content.slice(prefix.length).split(/ +/);
+	const commandName = args.shift().toLowerCase();
+
+	const command = bot.commands.get(commandName) || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+	if (!command) return;
+	if (command.guildOnly && message.channel.type !== 'text') {
+		return message.reply('I can\'t execute that command inside DMs!');
+	}
+
+	if (command.args && !args.length) {
+		let reply = `You didn't provide any arguments ${message.author}.`;
+
+		if (command.usage) {
+			reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+		}
+
+		return message.channel.send(reply);
+	}
+
+	if (!cooldowns.has(command.name)) {
+		cooldowns.set(command.name, new Discord.Collection());
+	}
+
+	const now = Date.now();
+	const timestamps = cooldowns.get(command.name);
+	const cooldownAmount = (command.cooldown || 3) * 1000;
+
+	if (!timestamps.has(message.author.id)) {
+		timestamps.set(message.author.id, now);
+		setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+	}
+	else {
+		const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+
+		if (now < expirationTime) {
+			const timeLeft = (expirationTime - now) / 1000;
+			return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+		}
+
+		timestamps.set(message.author.id, now);
+		setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+	}
+
+	try {
+		command.execute(message, args);
+	}
+	catch (error) {
+		console.error(error);
+		message.reply('There was an error trying to execute that command!');
+	}
+
+
+	/** 
   	//Prefix + Command
 	let args = message.content.toLowerCase().slice(ciprefix.length).trim().split(/ +/g);
 	let command = args.shift().toLowerCase();
@@ -150,9 +214,9 @@ bot.on("message", message => {
 		.addField("Cooldown! 🙃", `You must wait **2** seconds between commands.`)
 		return message.channel.send(cooldownEmbed).then(message => {message.delete(5000)});
 	}
-	//if(!message.member.hasPermissions("ADMINISTRATOR")){
-		//coolDown.add(message.author.id);
-//	}
+	if(!['275831434772742144',].includes(message.author.id)){
+		coolDown.add(message.author.id);
+	}
 
 	curSent = curSent + 1;
 	console.log(`${curSent}`);
@@ -194,6 +258,7 @@ bot.on("message", message => {
 	setTimeout(() => {
 		coolDown.delete(message.author.id)
 	}, coolSeconds * 1000)
+	*/
 });
 
 bot.on('message', async (msg) => {
@@ -231,8 +296,7 @@ bot.on('message', async (msg) => {
 			}
 			return msg.channel.send(`Playlist: **${playlist.title}** has been added to the queue!`);
 		} else {
-			try {
-				var video = await youtube.getVideo(url);
+			try { 
 			} catch (error) {
 				try {
 					var videos = await youtube.searchVideos(searchString, 10);
