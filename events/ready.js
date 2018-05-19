@@ -3,18 +3,7 @@ const tokens = require("../tokens.json");
 const PlexiDevApi = require('plexibotsapi');
 const api = new PlexiDevApi(tokens.plexitoken);
 
-module.exports = (bot, guild, member) => {
-try {
-	if(!guild.large){
-		guild.users.forEach(user => {
-		if(user.hasPermission("ADMINISTRATOR"))	{
-			send(`Hey, this is the bot developer here o/ Just letting you know that ium will be on maintenence for a bit, since I'm redesigning some of it's core features. Thanks for understanding! For more info join: https://discord.gg/Ac8HYtD`)
-			}
-	});
-}
-} catch (error) {
-	console.error(error)
-}
+module.exports = (bot, guild, member, messages) => {
 
 	let users = 0;
     bot.guilds.map(g => users += g.memberCount);

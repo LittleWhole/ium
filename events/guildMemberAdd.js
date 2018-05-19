@@ -13,6 +13,8 @@ module.exports = (bot, member, message) => {
             .setTimestamp();
         
             channel.send(memberEmbed)
+
+            member.guild.channels.get('447252295353237506').setName(`Total Users: ${member.guild.memberCount}`);
   } catch (error) {
     console.error(error);
   }

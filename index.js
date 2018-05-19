@@ -114,6 +114,15 @@ botspace.postServerCount(bot.guilds.size).then(() => {
 	console.error(e);
 });
 
+bot.on("ready", member => {
+	/** 
+	let users = 0;
+    bot.guilds.map(g => users += g.memberCount);
+	member.guild.channels.get('447244646306021388').setName(`Servers: ${bot.guilds.size}`);
+	member.guild.channels.get('447245206337880075').setName(`Users: ${users}`);
+	*/
+});
+
 bot.on("message", message => {
 	//XP and Level System
 	let xpAdd = Math.floor(Math.random() * 7) + 8;

@@ -10,6 +10,7 @@ module.exports = (bot, guild, member) => {
             4: "(ノಠ益ಠ)ノ彡┻━┻"
         }
 
+
     let sicon = guild.iconURL;
     let guildEmbed = new Discord.RichEmbed()
     .setAuthor("ium", "https://ium-bot.github.io/ium.jpg")
@@ -28,5 +29,4 @@ module.exports = (bot, guild, member) => {
     .setTimestamp();
 
     bot.channels.filter(c => c.id === '434521909745549333').forEach(channel => channel.send(guildEmbed));
-
   };
