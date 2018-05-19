@@ -160,6 +160,7 @@ bot.on("message", message => {
 				console.error(error);
 				message.reply('There was an error trying to execute that command!');
 			}
+		}
 		return;
 	}
 	if (command.guildOnly && message.channel.type !== 'text') {
