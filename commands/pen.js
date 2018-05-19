@@ -1,4 +1,4 @@
-const Discord = require("discord.js")
+/*** const Discord = require("discord.js")
 let playing = require("../data/playing.json")
 let pens = "9";
 
@@ -237,3 +237,4 @@ exports.run = (bot, message, args) => {
 
     if(parseInt(args[0]) !== "1" || parseInt(args[0]) !== "2" || parseInt(args[0]) !== "3") return message.channel.send("**You may only take 1, 2, or 3 pens at once!** (Need help? Type: `ium pen`)");
   }
+*/
