@@ -160,8 +160,7 @@ bot.on("message", message => {
 				console.error(error);
 				message.reply('There was an error trying to execute that command!');
 			}
-		} else
-			return;
+		return;
 	}
 	if (command.guildOnly && message.channel.type !== 'text') {
 		return message.reply('I can\'t execute that command inside DMs!');
