@@ -1,10 +1,10 @@
 const Discord = require("discord.js")
 
 module.exports = {
-	name: 'autouser',
+	name: 'avatar',
     description: 'Displays an enlarged image of a user\'s avatar, with a direct link to it.',
     aliases: ['pfp', 'profilepicture', 'icon'],
-    usage: '<user>',
+    usage: '<user (optional)>',
     args: true,
     execute(message, args) {
         let msg = await message.channel.send("Generating avatar...");
