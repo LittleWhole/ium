@@ -8,7 +8,7 @@ module.exports = {
     aliases: ['announcement'],
     usage: '<announcement>',
     args: true,
-    execute(message, bot, args, tools) {
+    execute(message, args) {
         if(!message.member.hasPermission("MANAGE_MESSAGES")) return errors.noPerms(message, "announce");
         
         let split = '|';
