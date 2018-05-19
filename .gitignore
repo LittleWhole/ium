@@ -1,13 +1,29 @@
 #.gitignore files
 
+
+
 #json files
+
 package-lock.json
+
 tokens.json
 
+
+
 #stuff...
+
 node_modules
+
 .vs
-translate.js
-user.js
-server.js
-google.js
+
+moderation.txt
+utils.txt
+xp.json
+money.json
+math.txt
+json.sqlite
+info.txt
+fun.txt
+emote.png
+emote.gif
+economy.txt
