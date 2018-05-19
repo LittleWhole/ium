@@ -6,7 +6,7 @@ module.exports = {
     aliases: ['pfp', 'profilepicture', 'icon'],
     usage: '<user (optional)>',
     args: false,
-    execute(message, args) {
+    async execute (message, args) {
         let msg = await message.channel.send("Generating avatar...");
         let mentionedUser = message.mentions.users.first() || message.author;
     
