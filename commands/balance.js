@@ -8,7 +8,7 @@ module.exports = {
     description: 'Displays an enlarged image of a user\'s avatar, with a direct link to it.',
     aliases: ['bal', 'bank', 'money'],
     usage: '<user (optional)>',
-    args: true,
+    args: false,
     execute(message, args) {
         const member = message.mentions.members.first() || message.guild.members.get(args[0]) || message.member;
         let user = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);

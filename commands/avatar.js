@@ -5,7 +5,7 @@ module.exports = {
     description: 'Displays an enlarged image of a user\'s avatar, with a direct link to it.',
     aliases: ['pfp', 'profilepicture', 'icon'],
     usage: '<user (optional)>',
-    args: true,
+    args: false,
     execute(message, args) {
         let msg = await message.channel.send("Generating avatar...");
         let mentionedUser = message.mentions.users.first() || message.author;
