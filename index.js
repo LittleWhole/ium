@@ -123,6 +123,166 @@ bot.on("ready", member => {
 	*/
 });
 
+
+bot.on("message", message => {
+	//XP and Level System
+	let xpAdd = Math.floor(Math.random() * 7) + 8;
+	//console.log(xpAdd);
+
+	if(!xp[message.author.id]){
+	  xp[message.author.id] = {
+		xp: 0,
+		level: 1
+	  };
+	}
+
+	let curxp = xp[message.author.id].xp;
+	let curlvl = xp[message.author.id].level;
+	let nxtLvl = xp[message.author.id].level * 100;
+	xp[message.author.id].xp =  curxp + xpAdd;
+	if(nxtLvl <= xp[message.author.id].xp){
+	  xp[message.author.id].level = curlvl + 1;
+	  let lvlup = new Discord.RichEmbed()
+	  .setTitle("You Leveled Up!")
+	  .setColor("#FFFFFF")
+	  .addField("New Level", curlvl + 1);
+
+	  //message.channel.send(lvlup);
+	}
+	fs.writeFile("./xp.json", JSON.stringify(xp), (err) => {
+	  if(err) console.log(err)
+	});
+
+	if (message.author.bot) return;
+	if(message.content.toLowerCase().indexOf(ciprefix) !== 0) return;
+
+	const args = message.content.slice(prefix.length).split(/ +/);
+	const commandName = args.shift().toLowerCase();
+
+	const command = bot.commands.get(commandName) || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+	if (!command) {
+		if (fs.existsSync(`./commands/${commandName}.js`)) {
+			try {
+				let commandFile = require(`./commands/${commandName}.js`);
+				if(commandFile.run)
+					commandFile.run(bot, message, args);
+			} catch (error) {
+				console.error(error);
+				message.reply('There was an error trying to execute that command!');
+			}
+		}
+		return;
+	}
+	if (command.guildOnly && message.channel.type !== 'text') {
+		return message.reply('I can\'t execute that command inside DMs!');
+	}
+
+	if (command.args && !args.length) {
+		let reply = `You didn't provide any arguments ${message.author}.`;
+
+		if (command.usage) {
+			reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+		}
+
+		return message.channel.send(reply);
+	}
+
+	if (!cooldowns.has(command.name)) {
+		cooldowns.set(command.name, new Discord.Collection());
+	}
+
+	const now = Date.now();
+	const timestamps = cooldowns.get(command.name);
+	const cooldownAmount = (command.cooldown || 3) * 1000;
+
+	if (!timestamps.has(message.author.id)) {
+		timestamps.set(message.author.id, now);
+		setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+	}
+	else {
+		const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+
+		if (now < expirationTime) {
+			const timeLeft = (expirationTime - now) / 1000;
+			return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+		}
+
+		timestamps.set(message.author.id, now);
+		setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+	}
+
+	try {
+		command.execute(message, args);
+	}
+	catch (error) {
+		console.error(error);
+		message.reply('There was an error trying to execute that command!');
+	}
+
+
+	/** 
+  	//Prefix + Command
+	let args = message.content.toLowerCase().slice(ciprefix.length).trim().split(/ +/g);
+	let command = args.shift().toLowerCase();
+
+
+	//CoolDown
+	if(!message.content.toLowerCase().startsWith(ciprefix)) return;
+	if(coolDown.has(message.author.id)){
+		message.delete();
+		let cooldownEmbed = new Discord.RichEmbed()
+		.setAuthor(message.author.username)
+		.setColor("#FFFFFF")
+		.addField("Cooldown! 🙃", `You must wait **2** seconds between commands.`)
+		return message.channel.send(cooldownEmbed).then(message => {message.delete(5000)});
+	}
+	if(!['275831434772742144',].includes(message.author.id)){
+		coolDown.add(message.author.id);
+	}
+
+	curSent = curSent + 1;
+	console.log(`${curSent}`);
+
+	//Currency
+	if(!iumics[message.author.id]){
+		iumics[message.author.id] = {
+			iumics: 0
+		}
+	}
+
+	let iumicAmt = Math.floor(Math.random() * 15) + 1;
+	let baseAmt = Math.floor(Math.random() * 15) + 1;
+
+	if(iumicAmt === baseAmt){
+		iumics[message.author.id] = {
+			iumics: iumics[message.author.id].iumics + iumicAmt
+		}
+	fs.writeFile("./data/money.json", JSON.stringify(iumics), (err) => {
+		if(err) console.log(err)
+	});
+	let moneyEmbed = new Discord.RichEmbed()
+	.setAuthor(message.author.username)
+	.setColor("#FFFFFF")
+	.addField("💰", `**${iumicAmt}** iumics added!`)
+
+	message.channel.send(moneyEmbed).then(message => {message.delete(8000)});
+
+	}
+
+	//Commands
+	try {
+	  let commandFile = require(`./commands/${command}.js`);
+	  commandFile.run(bot, message, args);
+	} catch (err) {
+	  //console.error(err);
+	}
+
+	setTimeout(() => {
+		coolDown.delete(message.author.id)
+	}, coolSeconds * 1000)
+	*/
+});
+
 bot.on('message', async (msg) => {
 	if(msg.author.bot) return undefined;
 	if(!msg.content.startsWith(ciprefix)) return undefined;
@@ -306,165 +466,6 @@ function play(guild, song) {
 
 	channelQueue.textChannel.send(`Now playing - **${song.title}**`)
 }
-
-bot.on("message", message => {
-	//XP and Level System
-	let xpAdd = Math.floor(Math.random() * 7) + 8;
-	//console.log(xpAdd);
-
-	if(!xp[message.author.id]){
-	  xp[message.author.id] = {
-		xp: 0,
-		level: 1
-	  };
-	}
-
-	let curxp = xp[message.author.id].xp;
-	let curlvl = xp[message.author.id].level;
-	let nxtLvl = xp[message.author.id].level * 100;
-	xp[message.author.id].xp =  curxp + xpAdd;
-	if(nxtLvl <= xp[message.author.id].xp){
-	  xp[message.author.id].level = curlvl + 1;
-	  let lvlup = new Discord.RichEmbed()
-	  .setTitle("You Leveled Up!")
-	  .setColor("#FFFFFF")
-	  .addField("New Level", curlvl + 1);
-
-	  //message.channel.send(lvlup);
-	}
-	fs.writeFile("./xp.json", JSON.stringify(xp), (err) => {
-	  if(err) console.log(err)
-	});
-
-	if (message.author.bot) return;
-	if(message.content.toLowerCase().indexOf(ciprefix) !== 0) return;
-
-	const args = message.content.slice(prefix.length).split(/ +/);
-	const commandName = args.shift().toLowerCase();
-
-	const command = bot.commands.get(commandName) || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
-	if (!command) {
-		if (fs.existsSync(`./commands/${commandName}.js`)) {
-			try {
-				let commandFile = require(`./commands/${commandName}.js`);
-				if(commandFile.run)
-					commandFile.run(bot, message, args);
-			} catch (error) {
-				console.error(error);
-				message.reply('There was an error trying to execute that command!');
-			}
-		}
-		return;
-	}
-	if (command.guildOnly && message.channel.type !== 'text') {
-		return message.reply('I can\'t execute that command inside DMs!');
-	}
-
-	if (command.args && !args.length) {
-		let reply = `You didn't provide any arguments ${message.author}.`;
-
-		if (command.usage) {
-			reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
-		}
-
-		return message.channel.send(reply);
-	}
-
-	if (!cooldowns.has(command.name)) {
-		cooldowns.set(command.name, new Discord.Collection());
-	}
-
-	const now = Date.now();
-	const timestamps = cooldowns.get(command.name);
-	const cooldownAmount = (command.cooldown || 3) * 1000;
-
-	if (!timestamps.has(message.author.id)) {
-		timestamps.set(message.author.id, now);
-		setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-	}
-	else {
-		const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-
-		if (now < expirationTime) {
-			const timeLeft = (expirationTime - now) / 1000;
-			return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
-		}
-
-		timestamps.set(message.author.id, now);
-		setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-	}
-
-	try {
-		command.execute(message, args);
-	}
-	catch (error) {
-		console.error(error);
-		message.reply('There was an error trying to execute that command!');
-	}
-
-
-	/** 
-  	//Prefix + Command
-	let args = message.content.toLowerCase().slice(ciprefix.length).trim().split(/ +/g);
-	let command = args.shift().toLowerCase();
-
-
-	//CoolDown
-	if(!message.content.toLowerCase().startsWith(ciprefix)) return;
-	if(coolDown.has(message.author.id)){
-		message.delete();
-		let cooldownEmbed = new Discord.RichEmbed()
-		.setAuthor(message.author.username)
-		.setColor("#FFFFFF")
-		.addField("Cooldown! 🙃", `You must wait **2** seconds between commands.`)
-		return message.channel.send(cooldownEmbed).then(message => {message.delete(5000)});
-	}
-	if(!['275831434772742144',].includes(message.author.id)){
-		coolDown.add(message.author.id);
-	}
-
-	curSent = curSent + 1;
-	console.log(`${curSent}`);
-
-	//Currency
-	if(!iumics[message.author.id]){
-		iumics[message.author.id] = {
-			iumics: 0
-		}
-	}
-
-	let iumicAmt = Math.floor(Math.random() * 15) + 1;
-	let baseAmt = Math.floor(Math.random() * 15) + 1;
-
-	if(iumicAmt === baseAmt){
-		iumics[message.author.id] = {
-			iumics: iumics[message.author.id].iumics + iumicAmt
-		}
-	fs.writeFile("./data/money.json", JSON.stringify(iumics), (err) => {
-		if(err) console.log(err)
-	});
-	let moneyEmbed = new Discord.RichEmbed()
-	.setAuthor(message.author.username)
-	.setColor("#FFFFFF")
-	.addField("💰", `**${iumicAmt}** iumics added!`)
-
-	message.channel.send(moneyEmbed).then(message => {message.delete(8000)});
-
-	}
-
-	//Commands
-	try {
-	  let commandFile = require(`./commands/${command}.js`);
-	  commandFile.run(bot, message, args);
-	} catch (err) {
-	  //console.error(err);
-	}
-
-	setTimeout(() => {
-		coolDown.delete(message.author.id)
-	}, coolSeconds * 1000)
-	*/
-});
 
 
 bot.login(tokens.token);
