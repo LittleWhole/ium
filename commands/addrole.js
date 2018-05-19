@@ -2,14 +2,15 @@ const Discord = require("discord.js");
 const errors = require("../utils/errors.js")
 
 module.exports = {
-	  name: 'about',
-    description: 'Adds ',
+	  name: 'addrole',
+    description: 'Adds the role that you chooose to the member that you mention.',
     aliases: ['addrole', 'giverole', 'ar', 'gr', 'add-role', 'give-role'],
+    usage: '[<user> <role>',
+    args: true,
     execute(message, bot) {
-
       if(!message.member.hasPermission("MANAGE_ROLES")) return errors.noPerms(message, "addrole");
       let rMember = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
-      if(!args[0]) return message.channel.send('**Mention a user, and type a role to give to the user.** `ium addrole <user> <role>`')
+      //if(!args[0]) return message.channel.send('**Mention a user, and type a role to give to the user.** `ium addrole <user> <role>`')
       if(!rMember) return message.channel.send("**User not found.** `ium addrole <user> <role>`");
       let role = args.join(" ").slice(22);
       if(!role) return message.channel.send("**Specify a role!** `ium addrole <user> <role>`");

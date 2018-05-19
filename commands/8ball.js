@@ -4,7 +4,7 @@ module.exports = {
 	name: '8ball',
     description: 'Ask ium a question and it will answer.',
     aliases: ['eightball'],
-    usage: '[Am I fat?]',
+    usage: '<question>',
     args: true,
     execute(message, args) {
         //if(!args[1]) return message.channel.send("**Type a question with two or more words!** `ium 8ball Am I a furry`");
