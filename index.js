@@ -150,7 +150,19 @@ bot.on("message", message => {
 	const commandName = args.shift().toLowerCase();
 
 	const command = bot.commands.get(commandName) || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
-	if (!command) return;
+	if (!command) {
+		if (fs.existsSync(`./commands/${commandName}.js`)) {
+			try {
+				let commandFile = require(`./commands/${commandName}.js`);
+				if(commandFile.run)
+					commandFile.run(bot, message, args);
+			} catch (error) {
+				console.error(error);
+				message.reply('There was an error trying to execute that command!');
+			}
+		} else
+			return;
+	}
 	if (command.guildOnly && message.channel.type !== 'text') {
 		return message.reply('I can\'t execute that command inside DMs!');
 	}
