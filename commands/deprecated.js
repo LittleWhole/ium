@@ -10,7 +10,7 @@ const errors = require("../utils/errors.js")
         let deprecatedEmbed = new Discord.RichEmbed()
         .setColor("#36393e")
         .setDescription(`This command is now deprecated <a:cursor:404001393360502805>`)
-        .addField(`Depricated Commands`, "`add` -> `calculate`\n`divide` -> `calculate`\n`minus` -> `calculate`\n`times` -> `calculate`\n`day`")
+        .addField(`Depricated Commands`, "`add` -> `calculate`\n`divide` -> `calculate`\n`minus` -> `calculate`\n`times` -> `calculate`\n`exponent` -> `calculate``day`")
         .setTimestamp();
         message.channel.send(deprecatedEmbed);
       },

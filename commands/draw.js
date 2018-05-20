@@ -1,4 +1,4 @@
-//Thanks to: PainFX#4965
+//Command from: PainFX#4965
 
 const {
     Canvas
@@ -14,22 +14,30 @@ let channels = [];
  * @param {String} command
  * @param {Array<String>} args
  */
-exports.run = (client, message, args, func, prefix) => {
-    if (channels.includes(message.channel.id)) {
-        message.reply("You can't have more than one Canvas in a channel!");
-        return;
-    }
-    var size;
-    if (+args[0] >= 5 && +args[0] <= 50) {
-        size = +args[0];
-    } else {
-        message.reply("Size must be between 5 and 50!");
-        return;
-    }
-    message.channel.send("Loading...").then((msg) => {
-        channels.push(message.channel.id);
-        const drawing = new Drawing(msg, size, args[1], args[2]);
-    });
+module.exports = {
+    name: 'draw',
+    description: 'Creates a canvas for you to draw on using reactions.',
+    usage: '50',
+    aliases: ['paint'],
+    args: true,
+	execute(bot, message, args, func){
+        if (channels.includes(message.channel.id)) {
+            message.reply("You can't have more than one Canvas in a channel!");
+            return;
+        }
+        var size;
+        if (+args[0] >= 5 && +args[0] <= 50) {
+            size = +args[0];
+        } else {
+            message.reply("Size must be between 5 and 50!");
+            return;
+        }
+
+        message.channel.send("Loading...").then((msg) => {
+            channels.push(message.channel.id);
+            const drawing = new Drawing(msg, size, args[1], args[2]);
+        });
+	},
 };
 
 

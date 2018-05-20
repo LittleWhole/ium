@@ -1,7 +1,13 @@
 const Discord = require("discord.js")
 const errors = require("../utils/errors.js")
 
-exports.run = (bot, message, args) => {
+module.exports = {
+    name: 'eval',
+    description: 'ium runs the code you give it.',
+    usage: '<code>',
+    aliases: ['run', 'exec'],
+    args: true,
+	execute(bot, message, args){
     if(message.author.id !== '275831434772742144') return errors.noTetra(message, "eval");;
     function clean(text) {
       if (typeof(text) === "string")
@@ -12,14 +18,6 @@ exports.run = (bot, message, args) => {
   
   console.log(`\n${message.author.username}#${message.author.discriminator} Used .Eval Command On ${message.guild.name}`)
     let argresult = args.join(' ');
-    if (message.author.id !==  '275831434772742144') {
-           // Check if user have Permissions to use the command
-          message.channel.send('You Don\'t Have Permissions To Use This Command !'); // Send Message to the channel if they dont have permissions
-          return; // Returns the code so the rest doesn't run
-        }
-        if (!argresult) {
-          return message.channel.send("Please Specify a Code To Run!");
-        }
   
         try {
   
@@ -56,5 +54,5 @@ exports.run = (bot, message, args) => {
           
               .catch( error => message.channel.send(`**ERROR:** ${error.message}`))
         }
-
-}
+	},
+};
