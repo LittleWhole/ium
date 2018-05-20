@@ -14,8 +14,8 @@ exports.run = async (bot, message, args) => {
     .addField("Math", "`divide` `exponent` `minus` `sqrt` `times`")
     .setFooter("Type ium dmhelp for more info on commands.");
 
-    return message.channel.send(serverEmbed);
-    message.channel.send("**Need more help? Join ium's server: **https://discord.gg/Ac8HYtD");
+    message.channel.send(serverEmbed);
+    return message.channel.send("**Need more help? Join ium's server: **https://discord.gg/Ac8HYtD");
 }
 
 

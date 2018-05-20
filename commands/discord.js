@@ -1,9 +1,10 @@
 const Discord = require("discord.js");
 
-exports.run = async (bot, message, args) => {
-    message.channel.send("**ium's server **https://discord.gg/Ac8HYtD");
-}
-
-module.exports.help = {
-    name: "discord"
-  }
+  module.exports = {
+      name: 'server',
+      description: 'Shows ium\s support server.',
+      aliases: ['support', 'botserver'],
+      execute(bot, message, args){
+        message.channel.send("**ium's server **https://discord.gg/Ac8HYtD");
+      },
+  };
