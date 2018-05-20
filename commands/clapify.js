@@ -1,10 +1,13 @@
+const Discord = require("discord.js");
 const randomizeCase = word => word.split('').map(c => Math.random() > 0.5 ? c.toUpperCase() : c.toLowerCase()).join('');
 
-exports.run = (bot, message, args) => {
-    if (args.length < 1) return message.channel.send("**I need some text to clapify.** `ium clap <sentence>`")
-    message.channel.send(args.map(randomizeCase).join(':clap:'));
-}
-
-module.exports.help = {
-    name: "clapify"
-}
+module.exports = {
+    name: 'choose',
+    description: 'Replaces the spaces in your sentence with clap emojis, and adds random capitalization .',
+    aliases: ['clap', 'claptext'],
+    usage: '<text> <text>',
+    args: true,
+	execute(message) {
+        message.channel.send(args.map(randomizeCase).join(':clap:'));
+	},
+};

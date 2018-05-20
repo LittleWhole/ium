@@ -4,6 +4,7 @@ module.exports = {
     name: 'choose',
     description: 'ium chooses something between the two parameters you give it.',
     usage: 'Bread Eggs',
+    aliases: ['pick'],
     args: true,
 	execute(message) {
         let replies = [`${args[0]}`, `${args[1]}`];
