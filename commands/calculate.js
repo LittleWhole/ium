@@ -7,7 +7,7 @@ module.exports = {
     aliases: ['expression', 'process'],
     usage: '<expression>',
     args: true,
-    execute(message, args) {
+    execute(bot, message, args){
         const embed = new Discord.RichEmbed()
         
         // Evaluate Expression

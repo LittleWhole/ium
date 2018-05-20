@@ -6,7 +6,7 @@ module.exports = {
 	  name: 'bunny',
     description: 'Sends a random image of a bunny.',
     aliases: ['rabbit'],
-    async execute (message, args) {
+    async execute (bot, message, args){
       let imgs = Math.floor(Math.random() * 80);
       let url = ['https://www.reddit.com/r/Rabbits/.json?sort=rising&t=hour&limit=100'];
       request({

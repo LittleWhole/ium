@@ -7,7 +7,7 @@ module.exports = {
 	name: 'about',
     description: 'Displays info about the bot.',
     aliases: ['info', 'bot', 'botinfo'],
-    execute(message, bot) {
+    execute(bot, message, args) {
         let botEmbed = new Discord.RichEmbed()
         .setAuthor("ium", "https://ium-bot.github.io/ium.jpg")
         .setColor('#000000')

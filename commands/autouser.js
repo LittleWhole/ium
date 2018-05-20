@@ -8,7 +8,7 @@ module.exports = {
     aliases: ['automember', 'completeuser', 'autoname'],
     usage: '<user>',
     args: true,
-    execute(message, args) {
+    execute(bot, message, args) {
         if(!args[0]) return message.reply("You need to type some text!");
         let members = [];
         let indexes = [];

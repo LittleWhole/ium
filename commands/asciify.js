@@ -8,7 +8,7 @@ module.exports = {
     aliases: ['ascii'],
     usage: '<text>',
     args: true,
-    execute(message, args) {
+    execute(bot, message, args) {
         var maxLen = 14 // You can modify the max characters here
 
         if(args.join(' ').length > maxLen) return message.channel.send('Only 14 characters admitted!')

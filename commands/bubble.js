@@ -5,7 +5,7 @@ module.exports = {
 	name: 'bubble',
     description: 'Popps a bubble from a bubble wrap.',
     aliases: ['pop', 'bubblepop'],
-    async execute (message, args) {
+    async execute (bot, message, args) {
         let TotalBubbles;
         let bubbles = await db.fetch(`bubbles_${message.author.id}`)
         if (bubbles === null) db.set(`bubbles_${message.author.id}`, 0);

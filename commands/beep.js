@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'beep',
 	description: 'Beep!',
-	execute(message) {
+	execute(bot, message, args){
 		message.channel.send('Boop :robot:.');
 	},
 };

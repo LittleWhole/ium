@@ -6,7 +6,7 @@ module.exports = {
     description: 'Bans the user that you mention from your server if you have permission to ban them.',
     usage: '<user> <reason (optional)>',
     args: true,
-    async execute(message, args) {
+    async execute(bot, message, args) {
       if (!message.member.hasPermission("BAN_MEMBERS")) return errors.noPerms(message, "ban");
 
       let member = message.mentions.members.first();

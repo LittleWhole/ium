@@ -6,7 +6,7 @@ module.exports = {
     usage: 'Bread Eggs',
     aliases: ['pick'],
     args: true,
-	execute(message) {
+	execute(bot, message, args){
         let replies = [`${args[0]}`, `${args[1]}`];
         let result = Math.floor((Math.random() * replies.length));
      

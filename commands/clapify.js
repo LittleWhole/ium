@@ -7,7 +7,7 @@ module.exports = {
     aliases: ['clap', 'claptext'],
     usage: '<text> <text>',
     args: true,
-	execute(message, args) {
+	execute(bot, message, args){
         message.channel.send(args.map(randomizeCase).join(':clap:'));
 	},
 };

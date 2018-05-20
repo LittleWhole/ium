@@ -6,7 +6,7 @@ module.exports = {
     aliases: ['eightball'],
     usage: '<question>',
     args: true,
-    execute(message, args) {
+    execute(bot, message, args) {
         //if(!args[1]) return message.channel.send("**Type a question with two or more words!** `ium 8ball Am I a furry`");
         let replies = ["Yes", "No", "I don't know", "Ask again later!", "Nope", "I am not sure!", "Pls No", "You tell me"];
      

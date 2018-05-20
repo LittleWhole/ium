@@ -9,7 +9,7 @@ module.exports = {
     aliases: ['bal', 'bank', 'money'],
     usage: '<user (optional)>',
     args: false,
-    execute(message, args) {
+    execute(bot, message, args) {
         const member = message.mentions.members.first() || message.guild.members.get(args[0]) || message.member;
         let user = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
     
