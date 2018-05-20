@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const fs = require("fs");
 const ms = require("ms");
-let warns = JSON.parse(fs.readFileSync("./warnings.json", "utf8"));
+let warns = require("../warnings.json")
 
 module.exports.run = async (bot, message, args) => {
 
@@ -18,31 +18,36 @@ module.exports.run = async (bot, message, args) => {
 
   warns[wUser.id].warns++;
 
-  fs.writeFile("./warnings.json", JSON.stringify(warns), (err) => {
+  fs.writeFile("../warnings.json", JSON.stringify(warns), (err) => {
     if (err) console.log(err)
   });
 
   let warnEmbed = new Discord.RichEmbed()
   .setDescription("Warns")
   .setAuthor(message.author.username)
-  .setColor("#fc6400")
+  .setColor("#2f3136")
   .addField("Warned User", `<@${wUser.id}>`)
   .addField("Warned In", message.channel)
   .addField("Number of Warnings", warns[wUser.id].warns)
   .addField("Reason", reason);
 
-  let warnchannel = message.guild.channels.find(`name`, "incidents");
-  if(!warnchannel) return message.reply("Couldn't find channel");
+  let warnchannel = message.guild.channels.find(`name`, "logs");
+  if(!warnchannel) return message.reply("Couldn't find `logs` channel");
 
   warnchannel.send(warnEmbed);
+  message.channel.send(warnEmbed)
 
+  if(warns[wUser.id].warns == 1){
+    message.guild.member(wUser).kick(reason);
+    message.reply(`<@${wUser.id}> has been warned. One more warn, and <@${wUser.id}> will me muted.`)
+  }
   if(warns[wUser.id].warns == 2){
     let muterole = message.guild.roles.find(`name`, "muted");
-    if(!muterole) return message.reply("You should create that role dude.");
+    if(!muterole) return message.reply("`muted` role not found.");
 
-    let mutetime = "10s";
+    let mutetime = "10min";
     await(wUser.addRole(muterole.id));
-    message.channel.send(`<@${wUser.id}> has been temporarily muted`);
+    message.channel.send(`<@${wUser.id}> has been temporarily muted for \`10 minutes\`. One more warn, and <@${wUser.id}> will me kicked.`);
 
     setTimeout(function(){
       wUser.removeRole(muterole.id)
@@ -50,8 +55,8 @@ module.exports.run = async (bot, message, args) => {
     }, ms(mutetime))
   }
   if(warns[wUser.id].warns == 3){
-    message.guild.member(wUser).ban(reason);
-    message.reply(`<@${wUser.id}> has been banned.`)
+    message.guild.member(wUser).kick(reason);
+    message.reply(`<@${wUser.id}> has been kicked.`)
   }
 
 }
