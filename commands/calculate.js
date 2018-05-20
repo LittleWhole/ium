@@ -2,25 +2,13 @@ const Discord = require('discord.js'),
       math = require('math-expression-evaluator');
 
 module.exports = {
-	name: 'asciify',
-    description: 'Asciifies the text you give it.',
-    aliases: ['ascii'],
-    usage: '<text>',
+	name: 'calculate',
+    description: 'Calculates the expression you give it.',
+    aliases: ['expression', 'process'],
+    usage: '<expression>',
     args: true,
     execute(message, args) {
-        const embed = new Discord.MessageEmbed()
-        .setColor(0xffffff);
-    
-        // Verify Input
-        if (!args[0]) {
-            
-            // Configure Embed
-            embed.setFooter('Please input an expression.');
-            
-            // Return & Send Embed
-            return message.channel.send(embed);
-            
-        }
+        const embed = new Discord.RichEmbed()
         
         // Evaluate Expression
         let result;
@@ -34,7 +22,6 @@ module.exports = {
             
         }
             
-        
         // Configure Embed
         embed.addField('Input', `\`\`\`js\n${args.join(' ')}\`\`\``)
             .addField('Output', `\`\`\`js\n${result}\`\`\``);
