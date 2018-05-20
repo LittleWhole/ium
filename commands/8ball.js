@@ -3,7 +3,7 @@ const Discord = require("discord.js")
 module.exports = {
 	name: '8ball',
     description: 'Ask ium a question and it will answer.',
-    aliases: ['eightball'],
+    aliases: ['eightball', '8b', 'magic8ball'],
     usage: '<question>',
     args: true,
     execute(bot, message, args) {
