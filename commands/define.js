@@ -6,7 +6,7 @@ const urban = require('relevant-urban'), Discord = require('discord.js');
       aliases: ['urban', 'definition', 'meaning'],
       usage: '<word>',
       args: true,
-      execute(bot, message, args){
+      async execute(bot, message, args){
         if(!args[0]) return message.channel.send('**Please specify some a word to define.** `ium define <word>`');
 
         let res = await urban(args.join(' ')).catch(e => {

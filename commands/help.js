@@ -15,7 +15,9 @@ exports.run = async (bot, message, args) => {
     .setFooter("Type ium dmhelp for more info on commands.");
 
     return message.channel.send(serverEmbed);
+    message.channel.send("**Need more help? Join ium's server: **https://discord.gg/Ac8HYtD");
 }
+
 
 module.exports.help = {
     name: "help"
