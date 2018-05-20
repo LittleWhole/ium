@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const config = require("../botconfig.json");
 const errors = require("../utils/errors.js")
 
 module.exports = {
@@ -9,7 +8,7 @@ module.exports = {
   usage: '<value>',
   args: true,
 	execute(bot, message, args) {
-    if(!message.member.hasPermission("MANAGE_MESSAGES")) return errors.noPerms(message, "clear");
+    	if(!message.member.hasPermission("MANAGE_MESSAGES")) return errors.noPerms(message, "clear");
 
 		const amount = parseInt(args[0]) + 1;
 
@@ -21,7 +20,7 @@ module.exports = {
 		}
 
 		message.channel.bulkDelete(amount, true).catch(err => {
-			console.error(err);
+			console.log(err);
 			message.channel.send('**There was an error trying to prune messages in this channel!** (Cannot delete more that 100 messages at once, and messages that are 14 days or older.)');
     });
     
