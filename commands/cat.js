@@ -1,17 +1,17 @@
 const Discord = require("discord.js");
 const snekfetch = require('snekfetch');
+const request = require("request");
 
-exports.run = async (bot, message, args) => {
-
-  request('http://edgecats.net/random', function (error, response, body) {
-  if (!error && response.statusCode == 200) {
-      return message.channel.send(body);
-    }
-});
-
-}
-
-
-module.exports.help = {
-    name: "nick"
-}
+module.exports = {
+	name: 'cat',
+    description: 'Displays a random picture of a cat.',
+    aliases: ['birb', 'meow'],
+    async execute (bot, message, args) {
+        request('http://edgecats.net/random', function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                return message.channel.send(body);
+              }
+          });
+    },
+};
+    
