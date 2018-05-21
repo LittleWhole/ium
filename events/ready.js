@@ -22,7 +22,19 @@ module.exports = (bot, guild, member, messages) => {
 	
 	//Activity
 	//bot.user.setActivity(`ium help | ${users} users`);
-	bot.user.setActivity(`maintenance...`);
+	setInterval(function() {
+		bot.user.setActivity(`ium help | ${users} users`);
+		setTimeout(function() {
+		bot.user.setActivity(`ium help | v0.0.5`);
+		setTimeout(function() {
+			bot.user.setActivity(`ium-bot.github.io`);
+			setTimeout(function() {
+				bot.user.setActivity(`ium-bot.github.io/invite`);
+				}, 100000)
+			}, 100000)
+		}, 100000)
+	}, 10000)
+	//bot.user.setActivity(`maintenance...`);
 
 	//Restart Logs
 	let restartEmbed = new Discord.RichEmbed()

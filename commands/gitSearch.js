@@ -4,7 +4,7 @@ const request = require("request");
 
 module.exports = {
     name: 'gitSearch',
-    description: 'Provides a link to the github page of ium.',
+    description: 'Searches github repo.',
     usage: '<repository>',
     aliases: ['gSearch'],
     args: true,

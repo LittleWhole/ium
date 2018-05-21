@@ -1,8 +1,8 @@
 const Discord = require("discord.js");
 
 module.exports = {
-    name: 'hastebin',
-    description: 'Pastes code that you provide in hastebin, and sends you the link to it.',
+    name: 'help',
+    description: 'Shows ium\s commands',
     aliases: ['commands'],
 	execute(bot, message, args){
         const serverEmbed = new Discord.RichEmbed()

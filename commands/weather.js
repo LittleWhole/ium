@@ -2,32 +2,44 @@ const Discord = require('discord.js')
 const weather = require('weather-js')
 exports.run = (bot, message, args) => {
 
-    weather.find({search: args.join(" "), degreeType: 'F'}, function(err, result) {
-    //   if (err) message.channel.send(err);
-      if (result === undefined || result.length === 0) {
-          const embed = new Discord.RichEmbed()
-          .setAuthor("**Please enter a valid location.** `ium weather <city/town>`")
-          .setColor("#f5a3fa")
-          return message.channel.send(embed);
-      }
-        var current = result[0].current;
-        var location = result[0].location;
-
+    const query = args.join(" ");
+        const { body } = await snekfetch
+            .get('https://query.yahooapis.com/v1/public/yql')
+            .query({
+                q: `select * from weather.forecast where u='f' AND woeid in (select woeid from geo.places(1) where text="${query}")`, // eslint-disable-line max-len
+                format: 'json'
+            });
+        if (!body.query.count) return msg.say('Location Not Found.');
         const embed = new Discord.RichEmbed()
-            .setDescription(`**${current.skytext}**`)
-            .setThumbnail(current.imageUrl)
-            .setAuthor(`Weather for ${current.observationpoint}`)
-            .setColor(`RANDOM`)
-            .addField('Timezone', `UTC${location.timezone}`, true)
-            .addField('Degree Type', location.degreetype, true)
-            .addField('Temperature', `${current.temperature} Degrees`, true)
-            .addField('Feels Like', `${current.feelslike} Degrees`, true)
-            .addField('Winds', current.winddisplay, true)
-            .addField('Humidity', `${current.humidity}%`, true)
-            .addField("Day", `${current.day}`, true)
-            .addField("Date", `${current.date}`, true);
-        message.channel.send(embed)
-    })
+            .setColor(0x00A2E8)
+            .setAuthor(body.query.results.channel.title, 'https://i.imgur.com/2MT0ViC.png')
+            .setURL(body.query.results.channel.link)
+            .setTimestamp()
+            .addField('City',
+                body.query.results.channel.location.city, true)
+            .addField('Country',
+                body.query.results.channel.location.country, true)
+            .addField('Region',
+                body.query.results.channel.location.region, true)
+            .addField('Condition',
+                body.query.results.channel.item.condition.text, true)
+            .addField('Temperature',
+                `${body.query.results.channel.item.condition.temp}°F`, true)
+            .addField('Humidity',
+                body.query.results.channel.atmosphere.humidity, true)
+            .addField('Pressure',
+                body.query.results.channel.atmosphere.pressure, true)
+            .addField('Rising',
+                body.query.results.channel.atmosphere.rising, true)
+            .addField('Visibility',
+                body.query.results.channel.atmosphere.visibility, true)
+            .addField('Wind Chill',
+                body.query.results.channel.wind.chill, true)
+            .addField('Wind Direction',
+                body.query.results.channel.wind.direction, true)
+            .addField('Wind Speed',
+                body.query.results.channel.wind.speed, true);
+        return message.channel.send(embed).catch(console.error);
  }
 
  module.exports.help = {
