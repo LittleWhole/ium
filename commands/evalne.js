@@ -5,7 +5,7 @@ module.exports = {
   name: 'evalne',
   description: 'ium runs the code you give it without an embed.',
   usage: '<code>',
-  aliases: ['runne', 'execne', 'evalnoembed'],
+  aliases: ['evalnoembed'],
   args: true,
 execute(bot, message, args){
     if(message.author.id !== '275831434772742144') return errors.noTetra(message, "eval");;

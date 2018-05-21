@@ -1,6 +1,7 @@
-const Discord = require('discord.js')
-const weather = require('weather-js')
-exports.run = (bot, message, args) => {
+const Discord = require("discord.js");
+const bot = new Discord.Client();
+const snekfetch = require('snekfetch');
+exports.run = async (bot, message, args) => {
 
     const query = args.join(" ");
         const { body } = await snekfetch
@@ -11,8 +12,8 @@ exports.run = (bot, message, args) => {
             });
         if (!body.query.count) return msg.say('Location Not Found.');
         const embed = new Discord.RichEmbed()
-            .setColor(0x00A2E8)
-            .setAuthor(body.query.results.channel.title, 'https://i.imgur.com/2MT0ViC.png')
+            .setColor('RANDOM')
+            .setAuthor(`${body.query.results.channel.location.city}, ${body.query.results.channel.location.country}`, 'https://ium-bot.github.io/ium.jpg')
             .setURL(body.query.results.channel.link)
             .setTimestamp()
             .addField('City',
@@ -38,7 +39,8 @@ exports.run = (bot, message, args) => {
             .addField('Wind Direction',
                 body.query.results.channel.wind.direction, true)
             .addField('Wind Speed',
-                body.query.results.channel.wind.speed, true);
+                body.query.results.channel.wind.speed, true)
+            .setFooter(`Powered by Yahoo Weather`);
         return message.channel.send(embed).catch(console.error);
  }
 

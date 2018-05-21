@@ -83,7 +83,55 @@ bot.on('disconnect', () => console.log('Disconnecting...'));
 
 bot.on('reconnecting', () => console.log('Reconnecting...'));
 
+function encode_utf8(s) {
+	return unescape(encodeURIComponent(s));
+}
+  
+function decode_utf8(s) {
+	return decodeURIComponent(escape(s));
+}
+  
+const clear = text => {
+	if (typeof(text) === "string")
+	  return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+	else
+		return text;
+}
+  
+bot.on("message", async (message) => {
+	const args = message.content.split(" ").slice(1);
+	if (message.content.startsWith(`${ciprefix}exec`)) {
+	  if(message.author.id !== botconfig.tetra) return;
+	  let msg = await message.channel.send("<a:loading:393852367751086090> Executing...");
+	  try {
 
+		const code = args.join(" ");
+		let evaled = childProcess.execSync(encode_utf8(code));
+  
+		console.log(typeof evaled)
+		console.log(evaled)
+  
+		if (typeof evaled !== "string")
+		  evaled = evaled.toString();
+  
+		  let woahembed = new Discord.RichEmbed()
+		  .setDescription("Evaluation successful. ")
+		  .addField(":inbox_tray: Input:", `\`\`\`sh\n${code}\n\`\`\``)
+		  .addField(":outbox_tray: Output:", `\`\`\`sh\n${clear(evaled)}\n\`\`\``)
+		  .setColor("#36393e")
+		  .setFooter("Evaluation Completed")
+		  .setTimestamp();
+  
+		  message.channel.send(woahembed);
+		  msg.delete();
+  
+	  } catch (err) {
+		message.channel.send(`\`ERROR\` \`\`\`sh\n${clear(err)}\n\`\`\``);
+		msg.delete();
+	  }
+	}
+
+});
 
 /**
 dbl.webhook.on('ready', hook => {
@@ -123,52 +171,6 @@ bot.on("ready", member => {
 	member.guild.channels.get('447245206337880075').setName(`Users: ${users}`);
 	*/
 });
-
-function encode_utf8(s) {
-	return unescape(encodeURIComponent(s));
-  }
-  
-  function decode_utf8(s) {
-	return decodeURIComponent(escape(s));
-  }
-  
-  const clear = text => {
-	if (typeof(text) === "string")
-	  return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
-	else
-		return text;
-  }
-  
-  bot.on("message", message => {
-	const args = message.content.split(" ").slice(1);
-  
-	if (message.content.startsWith(botconfig.prefix + "exec")) {
-	  if(message.author.id !== botconfig.ownerID) return;
-	  try {
-		const code = args.join(" ");
-		let evaled = childProcess.execSync(encode_utf8(code));
-  
-		console.log(typeof evaled)
-		console.log(evaled)
-  
-		if (typeof evaled !== "string")
-		  evaled = evaled.toString();
-  
-		  let woahembed = new Discord.RichEmbed()
-		  .setDescription("Evaluation successful. ")
-		  .addField(":inbox_tray: Input:", `\`\`\`sh\n${code}\n\`\`\``)
-		  .addField(":outbox_tray: Output:", `\`\`\`sh\n${clear(evaled)}\n\`\`\``)
-		  .setColor("#36393e")
-		  .setFooter("Evaluation Completed")
-		  .setTimestamp();
-  
-		  message.channel.send(woahembed);
-  
-	  } catch (err) {
-		message.channel.send(`\`ERROR\` \`\`\`sh\n${clear(err)}\n\`\`\``);
-	  }
-	}
-  });
 
 
 bot.on("message", message => {
@@ -416,7 +418,7 @@ bot.on('message', async (message) => {
 		serverQueue.connection.dispatcher.setVolumeLogarithmic(args[2] / 5);
 		message.channel.send(`Volume - **${args[2]}**`)
 		return;
-	} else if(message.content.startsWith(`${ciprefix}np`) || message.content.startsWith(`${ciprefix}playing`) || message.content.startsWith(`${ciprefix}nowplaying`)){
+	} else if(message.content === (`${ciprefix}np`) || message.content === (`${ciprefix}playing`) || message.content === (`${ciprefix}nowplaying`)){
 		//if(!message.member.voiceChannel) return message.channel.send(`**You must be in a voice channel to use this command.**`);
 		if(!serverQueue) return message.channel.send(`**There is nothing playing.**`);
 		return message.channel.send(`🎶 Now playing - **${serverQueue.songs[0].title}**`);
