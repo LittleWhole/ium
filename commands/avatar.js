@@ -7,7 +7,7 @@ module.exports = {
     usage: '<user (optional)>',
     args: false,
     async execute (bot, message, args) {
-        let msg = await message.channel.send("Generating avatar...");
+        let msg = await message.channel.send("<a:loading:393852367751086090> Generating avatar...");
         let mentionedUser = message.mentions.users.first() || message.author;
     
         let avatarEmbed = new Discord.RichEmbed()
