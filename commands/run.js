@@ -45,8 +45,7 @@ module.exports = {
 			msg.edit(`**Evaluation successful.**\n\n:inbox_tray: Input:\n\`\`\`sh\n${code}\n\`\`\`\n\n:outbox_tray: Output:\n\`\`\`sh\n${clear(evaled)}\n\`\`\`\n\`Evaluation Completed\``);
 	
 		} catch (err) {
-		  message.channel.send(`\`ERROR\` \`\`\`sh\n${clear(err)}\n\`\`\``);
-		  msg.delete();
+		  msg.edit(`\`ERROR\` \`\`\`sh\n${clear(err)}\n\`\`\``);
 		}
 	},
 };
