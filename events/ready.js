@@ -26,13 +26,13 @@ module.exports = (bot, guild, member, messages) => {
 		bot.user.setActivity(`ium help | ${users} users`);
 		setTimeout(function() {
 		bot.user.setActivity(`ium help | v0.0.5`);
-		setTimeout(function() {
+		/**setTimeout(function() {
 			bot.user.setActivity(`ium-bot.github.io`);
 			setTimeout(function() {
 				bot.user.setActivity(`ium-bot.github.io/invite`);
 				}, 100000)
 			}, 100000)
-		}, 100000)
+		*/}, 100000)
 	}, 10000)
 	//bot.user.setActivity(`maintenance...`);
 
