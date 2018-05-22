@@ -1,7 +1,7 @@
 module.exports = {
   name: 'calc',
-  description: 'ium calculates something using given numbers and an operation.'
-  usage: '<operation> <num1> [<num2> (if needed)]
+  description: 'ium calculates something using given numbers and an operation.',
+  usage: ['<operation> <num1> [<num2> (if needed)'],
   
   async execute(bot, message, args) {
    let f = [];
