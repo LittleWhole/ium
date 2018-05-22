@@ -19,12 +19,8 @@ module.exports = (bot, guild, member) => {
     .setDescription("ium has been **added** to a server :)")
     .addField("Guild", `${guild}`, inline)
     .addField("Users", `${guild.memberCount}`, inline)
-    .addField("Region", guild.region, inline)
-    .addField("Roles", guild.roles.size, inline)
     .addField("Channels", guild.channels.size, inline)
     .addField("Large?", guild.large, inline)
-    .addField("Creation", guild.createdAt)
-    .addField("Owner", `${guild.owner} | \`${guild.ownerID}\``)
     .setFooter(`ID - ${guild.id}`)
     .setTimestamp();
 
