@@ -1,14 +1,42 @@
+const Discord = require('discord.js'),
+      math = require('math-expression-evaluator');
+
 module.exports = {
   name: 'calc',
   description: 'ium calculates something using given numbers and an operation.',
-  usage: ['<operation> <num1> [<num2> (if needed)'],
+  description: 'Calculates the expression you give it.',
+  aliases: ['expression', 'process', 'calculate'],
+  args: true,
+  usage: ['<operation> <num1> <num2 (if needed)> or ium calculate <expression>'],
   
   async execute(bot, message, args) {
         const operation = args[0]
         const one = parseInt(args[1]);
         const two = parseInt(args[2]);
         
-        if (isNaN(one)) return message.reply("Invalid number.");
+        if (!isNaN(operation)) {
+            const embed = new Discord.RichEmbed()
+        
+            // Evaluate Expression
+            let result;
+            try {
+                
+                result = math.eval(args.join(' '));
+                
+            } catch (e) { // This will catch any errors in the expression
+                
+                result = 'Error: "Invalid Input"';
+                
+            }
+                
+            // Configure Embed
+            embed.addField('Input', `\`\`\`js\n${args.join(' ')}\`\`\``)
+                .addField('Output', `\`\`\`js\n${result}\`\`\``);
+                
+            // Send Embed
+            return message.channel.send(embed);
+        }
+        //if (isNaN(operation)) return message.reply("Invalid number.");
         if (["exponent"].includes(operation) && isNaN(two)) return message.reply("This operation requires a second parameter.");
         
         // Extract properties from math
@@ -23,8 +51,34 @@ module.exports = {
         else if (operation === "sec") ans = 1 / cos(one * Math.PI / 180.0);
         else if (operation === "csc") ans = 1 / sin(one * Math.PI / 180.0);
         else if (operation === "cot") ans = 1 / tan(one * Math.PI / 180.0);
-        else return message.reply("Invalid operation.");
+        else {
+            const embed = new Discord.RichEmbed()
         
-        message.reply(`The answer is \`${ans}\`.`);
+            // Evaluate Expression
+            let result;
+            try {
+                
+                result = math.eval(args.join(' '));
+                
+            } catch (e) { // This will catch any errors in the expression
+                
+                result = 'Error: "Invalid Input"';
+                
+            }
+                
+            // Configure Embed
+            embed.addField('Input', `\`\`\`js\n${args.join(' ')}\`\`\``)
+                .addField('Output', `\`\`\`js\n${result}\`\`\``);
+                
+            // Send Embed
+            return message.channel.send(embed);
+        }
+
+        const mathEmbed = new Discord.RichEmbed()
+        .addField('Input', `\`\`\`js\n${args.join(' ')}\`\`\``)
+        .addField('Output', `\`\`\`js\n${ans}\`\`\``);
+
+        message.channel.send(mathEmbed)
+        
     }
 }
