@@ -5,7 +5,7 @@ module.exports = {
   name: 'calc',
   description: 'ium calculates something using given numbers and an operation.',
   description: 'Calculates the expression you give it.',
-  aliases: ['expression', 'process', 'calculate'],
+  aliases: ['expression', 'process', 'calculate', 'compute'],
   args: true,
   usage: ['<operation> <num1> <num2 (if needed)> or ium calculate <expression>'],
   
@@ -64,7 +64,9 @@ module.exports = {
                 
                 result = 'Error: "Invalid Input"';
                 
-            }
+         }
+         if (isNan(one)) result = 'Error: "Input must be an integer"';
+         if (isNan(two) && (operation === "exponent" || operation === "n-root")) result = 'Error: "Input(s) must be integer(s)"';
                 
             // Configure Embed
             embed.addField('Input', `\`\`\`js\n${args.join(' ')}\`\`\``)
