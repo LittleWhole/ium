@@ -10,34 +10,21 @@ module.exports = {
     args: true,
     execute(bot, message, args) {
         if(!message.member.hasPermission("MANAGE_MESSAGES")) return errors.noPerms(message, "announce");
-        
-        let split = '|';
-        args = args.join(' ').split(split);
-    
-        for (var i = 0; i < args.length; i++) args[i] = args[0].trim();
-    
-        if(args[0]) args[0] = parseInt(`0x${args[0]}`);
-    
-        let option = {
-            title: args[0] || 'Announcment',
-            embedColor: args[0] || 0xffffff,
-            icon: `https://cdn.discordapp.com/attachments/416294137118195742/430094358381854720/avatar.png`
-        }
-    
-        const embed = new Discord.RichEmbed()
-            .setColor(option.embedColor)
-            .setTitle(option.title)
-    
-        if(option.message) embed.setDescription(option.message);
-    
+
+        let announcement = args.slice(0).join(" ");
+        let user = message.mentions.users.first() || message.author;
+
         message.delete();
-    
-        let announceEmbed = new Discord.RichEmbed()
-        .setColor(`RANDOM`)
-        .setTimestamp()
-        .setTitle(option.title)
-    
-        message.channel.send(announceEmbed);
+
+        const embed = new Discord.RichEmbed()
+        .setAuthor(user.username, user.displayAvatarURL)
+        .setTitle("**Announcement**")
+        .setColor("#77c9ff")
+        .setDescription(`${announcement}`)
+        .setFooter(`Announcement by: ${message.author.username}`)
+        .setTimestamp();
+
+        message.channel.send(embed);
     },
 };
     
