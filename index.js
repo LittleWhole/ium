@@ -43,6 +43,9 @@ bot.commands = new Discord.Collection();
 let prefix = botconfig.prefix;
 let ciprefix = prefix.toLowerCase();
 
+const botStats = {commandsUsed: 0, messagesReceived: 0, messagesSent: 0 }
+bot.botStats = botStats
+
 const commandFiles = fs.readdirSync('./commands');
 
 for (const file of commandFiles) {
@@ -178,6 +181,8 @@ bot.on("message", message => {
 	let xpAdd = Math.floor(Math.random() * 7) + 8;
 	//console.log(xpAdd);
 
+	
+
 	if(!xp[message.author.id]){
 	  xp[message.author.id] = {
 		xp: 0,
@@ -204,6 +209,14 @@ bot.on("message", message => {
 
 	if (message.author.bot) return;
 	if(message.content.toLowerCase().indexOf(ciprefix) !== 0) return;
+
+	if (message.author.id === client.user.id) {
+		// Bot Messages Sent (this session)
+		bot.botStats.messagesSent = client.botStats.messagesSent + 1
+	} else {
+		// Bot Messages Received (this session)
+		bot.botStats.messagesReceived = client.botStats.messagesReceived + 1
+	}
 
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const commandName = args.shift().toLowerCase();

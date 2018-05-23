@@ -6,11 +6,13 @@ const config = require("../botconfig.json");
 const os = require('os');
 const osu = require('os-utils');
 const cpuStat = require("cpu-stat")
+const worker = require("core-worker");
 let version = config.version;
 
-exports.run = (bot, message, args) => {
+exports.run = async(bot, message, args)  => {
     var memory = Math.round((os.totalmem() - os.freemem()) / 1000000);
     var totalmem = Math.round(os.totalmem() / 1000000);  
+    const npmv = await worker.process("npm -v").death();
     //var usersize = bot.users.length;
     let botAvatar = bot.user.displayAvatarURL;
     let uptime = moment.duration(bot.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
@@ -42,15 +44,18 @@ exports.run = (bot, message, args) => {
       .addField("Born On", bot.user.createdAt)
       .addField('Users', + users + ' users', true)
       .addField("Servers", `${bot.guilds.size} servers.`, true)
-      .addField("Text channels", text_channels, true)
-      .addField("Voice Channels", voice_channels, true)
+      .addField("Channels", `TC: ${text_channels}\nVC: ${voice_channels}\nTotal: ${bot.channels.size}`, true)
+      //.addField("Messages", `Sent: ${bot.botStats.messagesSent}\nRecieved: ${bot.botStats.messagesReceived}\nCommands: ${bot.botStats.commandsUsed}`, true)
+      .addField("Emojis", `${bot.emojis.size}`, true)
       .addField('RAM Usage', memory + 'MB / ' + totalmem + ' MB', true)
+      .addField('Memory', `Used: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}/${os.freemem().toFixed(2)}\nTotal: ${os.totalmem().toFixed(2)}`)
       //.addField("CPU", `md\n${os.cpus().map(i => `${i.model}`)[0]}`)
       .addField("CPU usage", `\`${percent.toFixed(2)}%\``,true)
       .addField("Uptime", uptime, true)
       .addField("Library",  `Discord.js`, true)
-      .addField("Arch", `\`${os.arch()}\``,true)
-      .addField('Server', os.hostname() + ' (' + os.type() + ')', true)
+      .addField("Node Version", process.version.replace("v", ""), true)
+      .addField("NPM Version", npmv.data.replace("\n", ""), true)
+      .addField('OS', `${os.platform()}** (${process.arch})`, true)
       .setTimestamp();
   
       message.channel.send(botEmbed);
