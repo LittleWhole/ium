@@ -1,25 +1,30 @@
 #.gitignore files
 
+
+
 #json files
+
 package-lock.json
+
 tokens.json
 
-#data
-xp.json
-money.json
-emote.png
-emote.gif
-json.sqlite
-warnings.json
+
 
 #stuff...
+
 node_modules
+
 .vs
 
-#help
 moderation.txt
 utils.txt
+xp.json
+money.json
 math.txt
+json.sqlite
 info.txt
 fun.txt
+emote.png
+emote.gif
 economy.txt
+time.js
