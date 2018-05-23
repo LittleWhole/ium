@@ -207,16 +207,16 @@ bot.on("message", message => {
 	  if(err) console.log(err)
 	});
 
-	if (message.author.bot) return;
-	if(message.content.toLowerCase().indexOf(ciprefix) !== 0) return;
-
-	if (message.author.id === client.user.id) {
+	if (message.author.id === bot.user.id) {
 		// Bot Messages Sent (this session)
-		bot.botStats.messagesSent = client.botStats.messagesSent + 1
+		bot.botStats.messagesSent = bot.botStats.messagesSent + 1
 	} else {
 		// Bot Messages Received (this session)
-		bot.botStats.messagesReceived = client.botStats.messagesReceived + 1
+		bot.botStats.messagesReceived = bot.botStats.messagesReceived + 1
 	}
+
+	if (message.author.bot) return;
+	if(message.content.toLowerCase().indexOf(ciprefix) !== 0) return;
 
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const commandName = args.shift().toLowerCase();
@@ -275,6 +275,7 @@ bot.on("message", message => {
 
 	try {
 		command.execute(bot, message, args);
+		bot.botStats.commandsUsed = bot.botStats.commandsUsed + 1
 	}
 	catch (error) {
 		console.error(error);

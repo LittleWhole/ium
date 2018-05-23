@@ -45,17 +45,16 @@ exports.run = async(bot, message, args)  => {
       .addField('Users', + users + ' users', true)
       .addField("Servers", `${bot.guilds.size} servers.`, true)
       .addField("Channels", `TC: ${text_channels}\nVC: ${voice_channels}\nTotal: ${bot.channels.size}`, true)
-      //.addField("Messages", `Sent: ${bot.botStats.messagesSent}\nRecieved: ${bot.botStats.messagesReceived}\nCommands: ${bot.botStats.commandsUsed}`, true)
+      .addField("Messages", `Sent: ${bot.botStats.messagesSent}\nRecieved: ${bot.botStats.messagesReceived}\nCommands: ${bot.botStats.commandsUsed}`, true)
       .addField("Emojis", `${bot.emojis.size}`, true)
-      .addField('RAM Usage', memory + 'MB / ' + totalmem + ' MB', true)
-      .addField('Memory', `Used: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}/${os.freemem().toFixed(2)}\nTotal: ${os.totalmem().toFixed(2)}`)
+      .addField('Memory', `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)} MB`, true)
       //.addField("CPU", `md\n${os.cpus().map(i => `${i.model}`)[0]}`)
       .addField("CPU usage", `\`${percent.toFixed(2)}%\``,true)
       .addField("Uptime", uptime, true)
       .addField("Library",  `Discord.js`, true)
       .addField("Node Version", process.version.replace("v", ""), true)
       .addField("NPM Version", npmv.data.replace("\n", ""), true)
-      .addField('OS', `${os.platform()}** (${process.arch})`, true)
+      .addField('OS', `${os.platform()} (${process.arch})`, true)
       .setTimestamp();
   
       message.channel.send(botEmbed);
