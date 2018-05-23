@@ -3,10 +3,13 @@ const snek = require('snekfetch');
 const twemoji = require('twemoji');
 const fs = require('fs');
 
-module.exports.run = async (bot, message, args) => {
-
-    if(!args[0]) return message.channel.send("**Provide an emoji to jumbify.** `ium jumboemoji :clap:`")
-
+module.exports = {
+    name: 'jumboemoji',
+    description: 'Enlarges an emoji.',
+    usage: '<emoji>',
+    aliases: ['emojienlarge'],
+    args: true,
+	async execute(bot, message, args){
     try {
       const emote = discord.Util.parseEmoji(args[0]);
       if (emote.animated === true) {
@@ -32,4 +35,5 @@ module.exports.run = async (bot, message, args) => {
         message.reply('Give me an actual emote.');
       }
     }
-  }
+	},
+};
