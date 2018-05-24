@@ -16,10 +16,11 @@ module.exports = {
     			db.run('CREATE TABLE suggestions ( ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Content varchar(2000), Author varchar(32) );');
     			console.log('New table suggestions created!');
   		}
-	})
+	});
+	let suggestionID;
 	db.run(`INSERT INTO suggestions (Content, Author) VALUES (${args.join(" ")}, ${message.author.id});`);
 	db.each(`SELECT * FROM suggestions WHERE Author=${message.author.id};`, (err, row) => {
-		const suggestionID = row.ID;	
+		suggestionID = row.ID;	
 	});
         let suggestEmbed = new Discord.RichEmbed()
         .setAuthor("Suggestion", "https://ium-bot.github.io/ium.jpg")
