@@ -17,19 +17,17 @@ module.exports = {
     			console.log('New table suggestions created!');
   		}
 	});
-	let suggestionID;
-	db.run(`INSERT INTO suggestions (Content, Author) VALUES (${args.join(" ")}, ${message.author.id});`);
-	db.each(`SELECT * FROM suggestions WHERE Author=${message.author.id};`, (err, row) => {
-		suggestionID = row.ID;	
-	});
+	db.run(`INSERT INTO suggestions (Content, Author) VALUES ('${args.join(" ")}', '${message.author.id}');`);
+	db.each(`SELECT * FROM suggestions WHERE Author='${message.author.id}' AND Content='${args.join(" ")}';`, function(err, row){
         let suggestEmbed = new Discord.RichEmbed()
         .setAuthor("Suggestion", "https://ium-bot.github.io/ium.jpg")
         .addField("User", `${message.author.tag}`)
         .addField("Suggestion", `${args.join(" ")}`)
-	.setFooter(suggestionID)
+	      .setFooter(row.ID)
         .setTimestamp();
-        bot.channels.filter(c => c.id === '415707252486438913').forEach(channel => channel.send(suggestEmbed));
+        client.channels.filter(c => c.id === '415707252486438913').forEach(channel => channel.send(suggestEmbed));
         message.channel.send(`<:check:314349398811475968> Your suggestion has been sent! Thanks!`);
+	});
     },
 };
     
