@@ -45,7 +45,7 @@ exports.run = async(bot, message, args)  => {
       .addField('Users', + users + ' users', true)
       .addField("Servers", `${bot.guilds.size} servers.`, true)
       .addField("Channels", `TC: ${text_channels}\nVC: ${voice_channels}\nTotal: ${bot.channels.size}`, true)
-      .addField("Messages", `Sent: ${bot.botStats.messagesSent}\nRecieved: ${bot.botStats.messagesReceived}\nCommands: ${bot.botStats.commandsUsed}`, true)
+      //.addField("Messages", `Sent: ${bot.botStats.messagesSent}\nRecieved: ${bot.botStats.messagesReceived}\nCommands: ${bot.botStats.commandsUsed}`, true)
       .addField("Emojis", `${bot.emojis.size}`, true)
       .addField('Memory', `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)} MB`, true)
       //.addField("CPU", `md\n${os.cpus().map(i => `${i.model}`)[0]}`)

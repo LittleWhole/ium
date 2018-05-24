@@ -125,7 +125,7 @@ exports.run = (bot, message, args) => {
   		           };
   		  return;
   	  }
-      playing[MAID].pens = playing[user].pens - penBot;
+      playing[user].pens = playing[user].pens - penBot;
       let penCountBot = 0;
       let penShowBot = '🖊';
       while (playing[user].pens > penCountBot) {
@@ -219,27 +219,27 @@ module.exports.run = (bot, message, args) => {
 		};
 	}
 	
-	let MAID = message.author.id;
+	let user = message.author.id;
 
-    let penGameEmbed = new Discord.RichEmbed()
-    .setTitle("Paper Clip Game")
-    .setColor("#77c9ff")
-    .addField("How To Play:", "In the game you and me start out with 9 paper clips, and we take turns taking clips. In every turn you can take one, two, or three clips. The goal of the game is to make is to make your opponent have one clip left. When your opponent has one clip left you win!")
-    .addField("Commands:", "**clip start** - Starts the game.\n**clip 1** - Takes one clip.\n**clip 2** - Takes two clips.\n**clip 3** - Takes three clips.\n**clip end** - Stops the game");
-    if(!args[0]) return  message.channel.send(penGameEmbed)
+  let penGameEmbed = new Discord.RichEmbed()
+  .setAuthor("Pen Game", "https://images.emojiterra.com/emojione/v2/512px/1f58a.png")
+  .setColor("#77c9ff")
+  .addField("How To Play", "In the game you and me start out with 9 pens 🖊, and we take turns taking pens. In every turn you can take 1 pen, 2 pens, or 3 pens. The goal of the game is to make is to make you oponent have one pen left. When your opponent has one pen left you win!")
+  .addField("Commands", "`ium pen start` - Starts game\n`ium pen 1` - Takes one pen\n`ium pen 2` - Takes two pens\n`ium pen 3` - Takes three Pens\n`ium pen stop` - Stops the game");
+   if(!args[0]) return message.channel.send(penGameEmbed);
 
    if(args[0] == "start"){
-	    if (game[MAID].game !== 'None') {
-		   return message.reply(`you cant start a game because you are already playing ${game[MAID].game}.`)
+	    if (game[user].game !== 'None') {
+		   return message.reply(`you cant start a game because you are already playing ${game[user].game}.`)
 		}
-		if (game[MAID].game === 'None') {
-	        game[MAID] = {
+		if (game[user].game === 'None') {
+	        game[user] = {
 				game: 'Clip Game',
 				clips: 9
 			}
 			let penCount = 0;
 			let penShow = '📎';
-			while (game[MAID].clips > penCount) {
+			while (game[user].clips > penCount) {
 				penShow = penShow + '📎'
 				penCount = penCount + 1
 			}
@@ -251,20 +251,20 @@ module.exports.run = (bot, message, args) => {
 		}
    }
 
-   if(game[MAID].game !== 'Clip Game'){
+   if(game[user].game !== 'Clip Game'){
      if(args[0] == "1" || args[0] == "2" || args[0] == "3" || args[0] == "stop"){
        return message.channel.send("**You must be in a game to use these commands. Do prefix then `clip start` to start a game.** (Need help? Type: prefix then `clip`)");
      }
    }
 
 
-  if(game[MAID].game === 'Clip Game'){
+  if(game[user].game === 'Clip Game'){
 
     if(args[0] == "1"){
-      game[MAID].clips = game[MAID].clips - 1
+      game[user].clips = game[user].clips - 1
       let penCount = 0;
       let penShow = '📎';
-      while (game[MAID].clips > penCount) {
+      while (game[user].clips > penCount) {
         penShow = penShow + '📎'
         penCount = penCount + 1
       }
@@ -279,10 +279,10 @@ module.exports.run = (bot, message, args) => {
 		return;
 	  }
 	  let botChoice = Math.floor(Math.random() * 2) + 1;
-	  game[MAID].clips = game[MAID].clips - botChoice
+	  game[user].clips = game[user].clips - botChoice
 	  let penCountB = 0;
       let penShowB = '📎';
-      while (game[MAID].clips > penCountB) {
+      while (game[user].clips > penCountB) {
         penShowB = penShowB + '📎'
         penCountB = penCountB + 1
       }
@@ -302,10 +302,10 @@ module.exports.run = (bot, message, args) => {
       return message.channel.send(penGameEmbed)
     }
     if(args[0] == "2"){
-      game[MAID].clips = game[MAID].clips - 2
+      game[user].clips = game[user].clips - 2
       let penCount = 0;
       let penShow = '📎';
-      while (game[MAID].clips > penCount) {
+      while (game[user].clips > penCount) {
         penShow = penShow + '📎'
         penCount = penCount + 1
       }
@@ -320,10 +320,10 @@ module.exports.run = (bot, message, args) => {
 		return;
 	  }
 	  let botChoice = Math.floor(Math.random() * 2) + 1;
-	  game[MAID].clips = game[MAID].clips - botChoice
+	  game[user].clips = game[user].clips - botChoice
 	  let penCountB = 0;
       let penShowB = '📎';
-      while (game[MAID].clips > penCountB) {
+      while (game[user].clips > penCountB) {
         penShowB = penShowB + '📎'
         penCountB = penCountB + 1
       }
@@ -343,10 +343,10 @@ module.exports.run = (bot, message, args) => {
       return message.channel.send(penGameEmbed)
     }
     if(args[0] == "3") {
-      game[MAID].clips = game[MAID].clips - 3
+      game[user].clips = game[user].clips - 3
       let penCount = 0;
       let penShow = '📎';
-      while (game[MAID].clips > penCount) {
+      while (game[user].clips > penCount) {
         penShow = penShow + '📎'
         penCount = penCount + 1
       }
@@ -361,10 +361,10 @@ module.exports.run = (bot, message, args) => {
 		return;
 	  }
 	  let botChoice = Math.floor(Math.random() * 2) + 1;
-	  game[MAID].clips = game[MAID].clips - botChoice
+	  game[user].clips = game[user].clips - botChoice
 	  let penCountB = 0;
       let penShowB = '📎';
-      while (game[MAID].clips > penCountB) {
+      while (game[user].clips > penCountB) {
         penShowB = penShowB + '📎'
         penCountB = penCountB + 1
       }
