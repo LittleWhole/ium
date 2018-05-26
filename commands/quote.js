@@ -10,10 +10,12 @@ module.exports = {
       try {
         let msg = message.channel.messages.get(args[0]);
         let author = msg.author
+	if (embeds) var hasEmbed = "[This message contains an embed. Look below for its contents.]";
+      	else hasEmbed = "";
         var quote = new Discord.RichEmbed()
         .setAuthor(`${author.tag} said:`, author.avatarURL)
         .setDescription(`${msg.content}`)
-        .setFooter(`Quoted by ${message.author.tag}`)
+        .setFooter(`Quoted by ${message.author.tag}${hasEmbed}`)
         .setColor(0x36393e);
 	 if (embeds) {
                 let messageEmbed = new Discord.RichEmbed()
