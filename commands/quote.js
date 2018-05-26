@@ -15,6 +15,23 @@ module.exports = {
         .setDescription(`${msg.content}`)
         .setFooter(`Quoted by ${message.author.tag}`)
         .setColor(0x36393e);
+	 if (embeds) {
+                let messageEmbed = new Discord.RichEmbed()
+                if (embeds.title) messageEmbed = messageEmbed.setTitle(embeds.title);
+                if (embeds.description) messageEmbed = messageEmbed.setDescription(embeds.description);
+                if (embeds.thumbnail) messageEmbed = messageEmbed.setThumbnail(embeds.description);
+                if (embeds.footer) messageEmbed = messageEmbed.setFooter(embeds.footer.text, embeds.footer.iconURL);
+                if (embeds.image) messageEmbed = messageEmbed.setImage(embeds.image.url);
+                if (embeds.hexColor) messageEmbed = messageEmbed.setColor(embeds.hexColor);
+                if (embeds.timestamp) messageEmbed = messageEmbed.setTimestamp();
+                if (embeds.url) messageEmbed = messageEmbed.setURL(embeds.url);
+                if (embeds.fields) {
+                  for (let i = 0; i < embeds.fields.length; i++) {
+                    messageEmbed = messageEmbed.addField(embeds.fields[i].name, embeds.fields[i].value, embeds.fields[i].inline);                    
+                  }
+                }
+                message.channel.send({embed: messageEmbed})
+       }
       } catch(e) {
         var quote = new Discord.RichEmbed()
         .setTitle(":x: Error")
