@@ -86,56 +86,6 @@ bot.on('disconnect', () => console.log('Disconnecting...'));
 
 bot.on('reconnecting', () => console.log('Reconnecting...'));
 
-function encode_utf8(s) {
-	return unescape(encodeURIComponent(s));
-}
-  
-function decode_utf8(s) {
-	return decodeURIComponent(escape(s));
-}
-  
-const clear = text => {
-	if (typeof(text) === "string")
-	  return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
-	else
-		return text;
-}
-  
-bot.on("message", async (message) => {
-	const args = message.content.split(" ").slice(1);
-	if (message.content.startsWith(`${ciprefix}exec`)) {
-	  if(message.author.id !== botconfig.tetra) return;
-	  let msg = await message.channel.send("<a:loading:393852367751086090> Executing...");
-	  try {
-
-		const code = args.join(" ");
-		let evaled = childProcess.execSync(encode_utf8(code));
-  
-		console.log(typeof evaled)
-		console.log(evaled)
-  
-		if (typeof evaled !== "string")
-		  evaled = evaled.toString();
-  
-		  let woahembed = new Discord.RichEmbed()
-		  .setDescription("Evaluation successful. ")
-		  .addField(":inbox_tray: Input:", `\`\`\`sh\n${code}\n\`\`\``)
-		  .addField(":outbox_tray: Output:", `\`\`\`sh\n${clear(evaled)}\n\`\`\``)
-		  .setColor("#36393e")
-		  .setFooter("Evaluation Completed")
-		  .setTimestamp();
-  
-		  message.channel.send(woahembed);
-		  msg.delete();
-  
-	  } catch (err) {
-		message.channel.send(`\`ERROR\` \`\`\`sh\n${clear(err)}\n\`\`\``);
-		msg.delete();
-	  }
-	}
-
-});
-
 /**
 dbl.webhook.on('ready', hook => {
   console.log(`Webhook running at http://${hook.hostname}:${hook.port}${hook.path}`);
@@ -164,15 +114,6 @@ botspace.postServerCount(bot.guilds.size).then(() => {
 }).catch((e) => {
 	console.error('Failed to post server count. ' + e.code);
 	console.error(e);
-});
-
-bot.on("ready", member => {
-	/** 
-	let users = 0;
-    bot.guilds.map(g => users += g.memberCount);
-	member.guild.channels.get('447244646306021388').setName(`Servers: ${bot.guilds.size}`);
-	member.guild.channels.get('447245206337880075').setName(`Users: ${users}`);
-	*/
 });
 
 
@@ -283,30 +224,7 @@ bot.on("message", message => {
 	}
 
 
-	/** 
-  	//Prefix + Command
-	let args = message.content.toLowerCase().slice(ciprefix.length).trim().split(/ +/g);
-	let command = args.shift().toLowerCase();
 
-
-	//CoolDown
-	if(!message.content.toLowerCase().startsWith(ciprefix)) return;
-	if(coolDown.has(message.author.id)){
-		message.delete();
-		let cooldownEmbed = new Discord.RichEmbed()
-		.setAuthor(message.author.username)
-		.setColor("#FFFFFF")
-		.addField("Cooldown! 🙃", `You must wait **2** seconds between commands.`)
-		return message.channel.send(cooldownEmbed).then(message => {message.delete(5000)});
-	}
-	if(!['275831434772742144',].includes(message.author.id)){
-		coolDown.add(message.author.id);
-	}
-
-	curSent = curSent + 1;
-	console.log(`${curSent}`);
-
-	//Currency
 	if(!iumics[message.author.id]){
 		iumics[message.author.id] = {
 			iumics: 0
@@ -331,19 +249,6 @@ bot.on("message", message => {
 	message.channel.send(moneyEmbed).then(message => {message.delete(8000)});
 
 	}
-
-	//Commands
-	try {
-	  let commandFile = require(`./commands/${command}.js`);
-	  commandFile.run(bot, message, args);
-	} catch (err) {
-	  //console.error(err);
-	}
-
-	setTimeout(() => {
-		coolDown.delete(message.author.id)
-	}, coolSeconds * 1000)
-	*/
 });
 
 
