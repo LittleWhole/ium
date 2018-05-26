@@ -2,8 +2,19 @@ const Discord = require("discord.js");
 const ms = require("ms");
 const errors = require("../utils/errors.js")
 
-module.exports.run = async (bot, message, args) => {
-    if(!message.member.hasPermission("MANAGE_MESSAGES")) return errors.noPerms(message, "unmute");
+
+
+  const Discord = require("discord.js")
+  const fs = require("fs");
+  const errors = require("../utils/errors.js")
+  
+  module.exports = {
+      name: 'unmute',
+      description: 'Unmutes a user.',
+      usage: '<user>',
+      args: true,
+      async execute(bot, message, args){
+        if(!message.member.hasPermission("MANAGE_MESSAGES")) return errors.noPerms(message, "unmute");
 
         let toMute = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
         if(!toMute) return message.channel.sendMessage("**Please mention an user or ID to mute.** `ium unmute <user id>`");
@@ -15,8 +26,5 @@ module.exports.run = async (bot, message, args) => {
         await toMute.removeRole(role);
         message.channel.sendMessage("The user has been unmuted!");
 
-}
-
-module.exports.help = {
-    name: "unmute"
-  }
+      },
+  };
