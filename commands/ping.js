@@ -10,7 +10,7 @@ module.exports = {
         const m = await message.channel.send("<a:cursor:404001393360502805> Pinging...");
         const pingEmbed = new Discord.RichEmbed()
         .setColor('#ffffff')
-        .addField("🏓 Pong!", `Latency \`${m.createdTimestamp - message.createdTimestamp}ms\`\n API Latency \`${Math.round(bot.ping)}ms\``)
+        .addField("🏓 Pong!", `Latency \`${m.createdTimestamp - message.createdTimestamp}ms\`\nAPI Latency \`${Math.round(bot.ping)}ms\``)
     
         m.edit(pingEmbed);
 	},
