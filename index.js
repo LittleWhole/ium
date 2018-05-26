@@ -33,6 +33,7 @@ let inline = true;
 let volumeValue = 5;
 let curSent = 0;
 const queue = new Map ();
+module.exports.queue = queue;
 
 
 const { Client } = require('idiotic-api');
@@ -264,11 +265,11 @@ bot.on('message', async (message) => {
 	command = command.slice(ciprefix.length)
 
 
-	if(message.content.startsWith(`${ciprefix}play`)) {
+	/**if(message.content.startsWith(`${ciprefix}play`)) {
 		const voiceChannel = message.member.voiceChannel;
 		if(!voiceChannel) return message.channel.send(`**You must be in a voice channel to play music.**`);
 		if(!args[1]) return message.channel.send(`**Provide a song to play.**`);
-		/**
+
 		const permissions = voiceChannel.permissionsFor(bot.user.message);
 		if(!permissions.has(`CONNECT`)) {
 			return message.channel.send('**I do not have permission to connect to your voice channel.** Make sure that I have the permission, `CONNECT`');
@@ -276,7 +277,7 @@ bot.on('message', async (message) => {
 		if(!permissions.has(`SPEAK`)) {
 			return message.channel.send('**I do not have permission to speak in your voice channel.** Make sure that I have the permission, `SPEAK`');
 		}
-		*/
+
 
 		if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
 			const playlist = await youtube.getPlaylist(url);
@@ -319,13 +320,13 @@ bot.on('message', async (message) => {
 			}
 
 			return handleVideo(video, message, voiceChannel);
-		}
-	} else if(message.content.startsWith(`${ciprefix}skip`)) {
+}
+} /** else if(message.content.startsWith(`${ciprefix}skip`)) {
 		if(!message.member.voiceChannel) return message.channel.send(`**You must be in a voice channel to use this command.**`);
 		if(!serverQueue) return message.channel.send(`**I cannot skip because nothing is playing.**`)
 		serverQueue.connection.dispatcher.end(`Skip Command Used`);
 		return;
-	} else if(message.content.startsWith(`${ciprefix}volume`)){
+	}*/ if(message.content.startsWith(`${ciprefix}volume`)){
 		if(!message.member.voiceChannel) return message.channel.send(`**You must be in a voice channel to use this command.**`);
 		if(!serverQueue) return message.channel.send(`**You must play something to use this command.**`)
 		if(!args[2]) return message.channel.send(`The current volume is **${serverQueue.volume}**`)
@@ -341,7 +342,7 @@ bot.on('message', async (message) => {
 		//if(!message.member.voiceChannel) return message.channel.send(`**You must be in a voice channel to use this command.**`);
 		if(!serverQueue) return message.channel.send(`**There is nothing playing.**`);
 		return message.channel.send(`🎶 Now playing - **${serverQueue.songs[0].title}**`);
-	} else if(message.content.startsWith(`${ciprefix}queue`)){
+} /**else if(message.content.startsWith(`${ciprefix}queue`)){
 		let index = 0;
 		if(!serverQueue) return message.channel.send(`**There are no songs in the queue.**`);
 		let queueEmbed = new Discord.RichEmbed()
@@ -350,7 +351,7 @@ bot.on('message', async (message) => {
 		.setDescription(`${serverQueue.songs.map(song => `**${++index} -** ${song.title}`).join('\n')}`)
 		.setFooter(`Now Playing - ${serverQueue.songs[0].title}`);
 		return message.channel.send(queueEmbed);
-	} else if (message.content.startsWith(`${ciprefix}pause`)) {
+	}*/ else if (message.content.startsWith(`${ciprefix}pause`)) {
 		if (serverQueue) {
 			serverQueue.connection.dispatcher.pause();
 			return message.channel.send(`⏸ Paused - **${serverQueue.songs[0].title}**`);
@@ -367,8 +368,7 @@ bot.on('message', async (message) => {
 	return;
 });
 
-
-async function handleVideo(video, message, voiceChannel, playlist = false) {
+module.exports.handleVideo = async function handleVideo(video, message, voiceChannel, playlist = false) {
 	const serverQueue = queue.get(message.guild.id);
 	console.log(video);
 	const song = {
