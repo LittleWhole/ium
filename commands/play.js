@@ -26,7 +26,7 @@ module.exports = {
     usage: '<song>',
     args: true,
 	async execute(bot, message, args){
-        const url = arg.replace(/<(.+)>/g, '$1');
+        const url = args[1] ? args[1].replace(/<(.+)>/g, '$1') : '';
 		if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
 			const playlist = await youtube.getPlaylist(url);
 			const videos = await playlist.getVideos();
