@@ -1,11 +1,11 @@
 const yoMamma = require('yo-mamma').default;
 
-module.exports.run = (bot, message, args) => {
-
-    let joke = yoMamma();
-    message.channel.send(joke)
-}
-
-module.exports.help = {
-    name: "yomama"
-}
+module.exports = {
+    name: 'yomama',
+    description: 'Sends a yomama joke.',
+    aliases: ['yo-mamma'],
+	execute(bot, message, args){
+        let joke = yoMamma();
+        message.channel.send(joke)
+	},
+};
