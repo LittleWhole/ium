@@ -5,7 +5,7 @@ module.exports = {
     description: 'Reverses text.',
     usage: '<text>',
     args: true,
-	async execute(bot, message, args){
+	execute(bot, message, args){
     message.channel.send(args.join(' ').split('').reverse().join(''));
 	},
 };

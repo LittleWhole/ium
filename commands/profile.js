@@ -8,7 +8,7 @@ module.exports = {
     description: 'Provides a users iumics, xp and level.',
     usage: '<user (optional)>',
     args: true,
-	async execute(bot, message, args){
+	execute(bot, message, args){
     const member = message.mentions.members.first() || message.guild.members.get(args[0]);
     let user = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
     let target = message.mentions.users.first();

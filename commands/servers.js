@@ -7,7 +7,7 @@ let version = config.version;
 module.exports = {
     name: 'servers',
     description: 'Shows how many servers ium is on.',
-	async execute(bot, message, args){
+	execute(bot, message, args){
     let botAvatar = bot.user.displayAvatarURL;
     let uptime = moment.duration(bot.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
     let usersize = bot.users.size;

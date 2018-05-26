@@ -7,7 +7,7 @@ module.exports = {
     description: 'Reloads the command you provide.',
     usage: '<command>',
     args: true,
-	async execute(bot, message, args){
+	execute(bot, message, args){
         if (!['275831434772742144',].includes(message.author.id)) return errors.noTetra(message, "reload");
     
         try{

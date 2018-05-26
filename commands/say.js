@@ -4,7 +4,7 @@ module.exports = {
     usage: '<text>',
     args: true,
     aliases: ['echo', 'repeat'],
-	async execute(bot, message, args){
+	execute(bot, message, args){
         const sayMessage = args.join(" ");
     
         //message.delete().catch(O_o=>{});

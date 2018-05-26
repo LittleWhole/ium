@@ -3,7 +3,7 @@ module.exports = {
     name: 'server',
     description: 'Displays information and stats on your server.',
     aliases: ['serverinfo'],
-	async execute(bot, message, args){
+	execute(bot, message, args){
     const verlvl = {
       0: "None",
       1: "Low",
