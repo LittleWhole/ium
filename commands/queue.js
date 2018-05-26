@@ -20,18 +20,18 @@ module.exports = {
     name: 'queue',
     description: 'Lists all the songs in the current queue.',
 	async execute(bot, message, args){
+        var index = 0;
 
         const voiceChannel = message.member.voiceChannel;
+        //const queue = index.queue;
+        //const serverQueue = bot.serverQueue;
 
-        const queue = index.queue;
-        const serverQueue = index.serverQueue;
-
-		if(!serverQueue) return message.channel.send(`**There are no songs in the queue.**`);
+		//if(!bot.serverQueue) return message.channel.send(`**There are no songs in the queue.**`);
 		let queueEmbed = new Discord.RichEmbed()
 		.setAuthor(`Queue - ${message.guild.name}`, "https://ium-bot.github.io/ium.jpg")
 		.setColor("#bf8aff")
-		.setDescription(`${serverQueue.songs.map(song => `**${++index} -** ${song.title}`).join('\n')}`)
-		.setFooter(`Now Playing - ${serverQueue.songs[0].title}`);
+		.setDescription(`${bot.serverQueue.songs.map(song => `**${++index} -** ${song.title}`).join('\n')}`)
+		.setFooter(`Now Playing - ${bot.serverQueue.songs[0].title}`);
 		return message.channel.send(queueEmbed);
         
 	},

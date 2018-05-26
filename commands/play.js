@@ -9,6 +9,7 @@ const bot = new Discord.Client({disableEveryone: true});
 const ytdl = require('ytdl-core');
 const YouTube = require('simple-youtube-api');
 const youtube = new YouTube(GOOGLE_API_KEY);
+//const serverQueue = bot.queue.get(message.guild.id)
 //const queue = new Map ();
 //module.exports.queue = index.queue;
 
