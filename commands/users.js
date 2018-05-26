@@ -1,15 +1,10 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
-const moment = require("moment");
-require("moment-duration-format");
-const config = require("../botconfig.json");
-const os = require('os');
-const osu = require('os-utils');
-const cpuStat = require("cpu-stat")
-let version = config.version;
 
-exports.run = (bot, message, args) => {
-
+module.exports = {
+    name: 'users',
+    description: 'Shows how many users ium is with.',
+	async execute(bot, message, args){
     let users = 0;
     bot.guilds.map(g => users += g.memberCount);
     try {
@@ -26,8 +21,5 @@ exports.run = (bot, message, args) => {
       console.error(err);
       return message.channel.send(`An error occured: ${err}`);
     }
-}
-
-module.exports.help = {
-  name: "stats"
-}
+	},
+};
