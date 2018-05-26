@@ -9,7 +9,10 @@ const cpuStat = require("cpu-stat")
 const worker = require("core-worker");
 let version = config.version;
 
-exports.run = async(bot, message, args)  => {
+module.exports = {
+    name: 'stats',
+    description: 'Displays stats on ium.',
+	async (bot, message, args){
     var memory = Math.round((os.totalmem() - os.freemem()) / 1000000);
     var totalmem = Math.round(os.totalmem() / 1000000);  
     const npmv = await worker.process("npm -v").death();
@@ -63,8 +66,5 @@ exports.run = async(bot, message, args)  => {
       console.error(err);
       return message.channel.send(`An error occured: ${err}`);
     }
-}
-
-module.exports.help = {
-  name: "stats"
-}
+	},
+};
