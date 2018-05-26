@@ -1,7 +1,4 @@
 const Discord = require("discord.js");
-
-  const Discord = require("discord.js");
-  const meme = require('memejs');
   
   module.exports = {
       name: 'trello',
