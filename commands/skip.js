@@ -20,6 +20,7 @@ module.exports = {
     name: 'skip',
     description: 'Skips the currently playing song.',
     aliases: ['next'],
+    cooldown: 3,
 	async execute(bot, message, args){
         const voiceChannel = message.member.voiceChannel;
 

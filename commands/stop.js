@@ -11,6 +11,7 @@ var server;
 module.exports = {
     name: 'stop',
     description: 'Stops playing music.',
+
 	async execute(bot, message, args){
         const queue = bot.queue.get(message.guild.id);
 		if (!message.member.voiceChannel) return msg.channel.send('**You must be in a voice channel to use this command.**');

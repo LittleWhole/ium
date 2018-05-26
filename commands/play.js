@@ -24,6 +24,7 @@ module.exports = {
     description: 'Plays the song you search for in the voice channel you are in.',
     usage: '<song>',
     args: true,
+    cooldown: 3,
 	async execute(bot, message, args){
         const searchString = args.slice(0).join(' ');
         const url = args[0] ? args[0].replace(/<(.+)>/g, '$1') : '';

@@ -5,6 +5,7 @@ const meme = require('memejs');
 module.exports = {
     name: 'meme',
     description: 'Sends 👏 an 👏 amazing 👏 meme.',
+    cooldown: 4,
 	async execute(bot, message, args){
     let searchMessage = await message.channel.send('<a:typing:393848431413559296> Searching for memes in the database... ');
     meme(function(data) {
