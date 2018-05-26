@@ -6,10 +6,11 @@ module.exports = {
     aliases: ['quo', 'reference'],
     usage: '<message ID>',
     args: true,
-    execute(bot, message, args) {
+    async execute(bot, message, args) {
       try {
         let msg = message.channel.messages.get(args[0]);
         let author = msg.author
+	var embeds = msg.embeds[0]
 	if (embeds) var hasEmbed = "[This message contains an embed. Look below for its contents.]";
       	else hasEmbed = "";
         var quote = new Discord.RichEmbed()
