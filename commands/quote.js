@@ -15,14 +15,6 @@ module.exports = {
         .setDescription(`${msg.content}`)
         .setFooter(`Quoted by ${message.author.tag}`)
         .setColor(0x36393e);
-      } catch(e) {
-        var quote = new Discord.RichEmbed()
-        .setTitle(":x: Error")
-        .setDescription("Could not retrieve message! Maybe the bot was offline?")
-        .setTimestamp()
-        .setColor(0x36393e);
-      } finally {
-         message.channel.send({embed: quote});
 	 if (embeds) {
                 let messageEmbed = new Discord.RichEmbed()
                 if (embeds.title) messageEmbed = messageEmbed.setTitle(embeds.title);
@@ -40,6 +32,14 @@ module.exports = {
                 }
                 message.channel.send({embed: messageEmbed})
        }
+      } catch(e) {
+        var quote = new Discord.RichEmbed()
+        .setTitle(":x: Error")
+        .setDescription("Could not retrieve message! Maybe the bot was offline?")
+        .setTimestamp()
+        .setColor(0x36393e);
+      } finally {
+         message.channel.send({embed: quote});
       }
     },
 };
