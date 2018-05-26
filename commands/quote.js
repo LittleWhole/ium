@@ -6,7 +6,7 @@ module.exports = {
     aliases: ['quo', 'reference'],
     usage: '<message ID>',
     args: true,
-    execute(bot, message, args) {
+    async execute(bot, message, args) {
       try {
         let msg = message.channel.messages.get(args[0]);
         let author = msg.author
