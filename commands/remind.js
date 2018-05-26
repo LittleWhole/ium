@@ -1,4 +1,4 @@
-const Discord = require("discord.js");
+/**const Discord = require("discord.js");
 const prefix = ("ium ");
 const ms = require("ms");
 
@@ -37,3 +37,5 @@ exports.run = async (bot, message, args) => {
     module.exports.help = {
       name: "mute"
     }
+
+*/
