@@ -7,7 +7,7 @@ const Discord = require("discord.js");
 const Util = require("discord.js");
 const bot = new Discord.Client({disableEveryone: true});
 const ytdl = require('ytdl-core');
-const ytdl = require('ytdl-core');
+//const ytdl = require('ytdl-core');
 const Youtube = require('simple-youtube-api');
 
 //const serverQueue = bot.queue.get(message.guild.id)
