@@ -12,7 +12,7 @@ let version = config.version;
 module.exports = {
     name: 'stats',
     description: 'Displays stats on ium.',
-	async (bot, message, args){
+	async execute(bot, message, args){
     let gatherMessages = await message.channel.send('<a:loading:393852367751086090> Gathering stats... ');
     var memory = Math.round((os.totalmem() - os.freemem()) / 1000000);
     var totalmem = Math.round(os.totalmem() / 1000000);  

@@ -1,12 +1,6 @@
 const Discord = require("discord.js");
 const ms = require("ms");
 const errors = require("../utils/errors.js")
-
-
-
-  const Discord = require("discord.js")
-  const fs = require("fs");
-  const errors = require("../utils/errors.js")
   
   module.exports = {
       name: 'unmute',

@@ -6,7 +6,7 @@ module.exports = {
     description: 'Makes a vote in the server, and reacts with checkmark and x. (Poll is used for admins, vote command is used for normal users)',
     usage: '<vote>',
     args: true,
-	execute(bot, message, args){
+	async execute(bot, message, args){
     
         let poll = args.join(" ");
     
