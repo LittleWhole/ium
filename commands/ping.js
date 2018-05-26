@@ -2,12 +2,12 @@ const Discord = require("discord.js");
 const ms = require("ms");
 
 exports.run = async (bot, message, args) => {
+    const m = await message.channel.send("<a:cursor:404001393360502805> Pinging...");
     const pingEmbed = new Discord.RichEmbed()
     .setColor('#ffffff')
-    .addField("🏓 Pong!", `${Date.now() - message.createdTimestamp} ms`)
+    .addField("🏓 Pong!", `Latency \`${m.createdTimestamp - message.createdTimestamp}ms\`\n API Latency \`${Math.round(bot.ping)}ms\``)
 
-
-    message.channel.send(pingEmbed);
+    m.edit(pingEmbed);
 }
 
 module.exports.help = {
