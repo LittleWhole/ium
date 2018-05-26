@@ -21,7 +21,7 @@ module.exports = {
     description: 'Lists all the songs in the current queue.',
 	async execute(bot, message, args){
         var index = 0;
-
+		const queue = bot.queue.get(message.guild.id);
         const voiceChannel = message.member.voiceChannel;
         //const queue = index.queue;
         //const serverQueue = bot.serverQueue;
@@ -30,8 +30,8 @@ module.exports = {
 		let queueEmbed = new Discord.RichEmbed()
 		.setAuthor(`Queue - ${message.guild.name}`, "https://ium-bot.github.io/ium.jpg")
 		.setColor("#bf8aff")
-		.setDescription(`${bot.serverQueue.songs.map(song => `**${++index} -** ${song.title}`).join('\n')}`)
-		.setFooter(`Now Playing - ${bot.serverQueue.songs[0].title}`);
+		.setDescription(`${queue.songs.map(song => `**${++index} -** ${song.title}`).join('\n')}`)
+		.setFooter(`Now Playing - ${queue.songs[0].title}`);
 		return message.channel.send(queueEmbed);
         
 	},

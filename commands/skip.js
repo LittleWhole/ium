@@ -24,7 +24,7 @@ module.exports = {
         const voiceChannel = message.member.voiceChannel;
 
         const queue = bot.queue.get(message.guild.id);
-        const serverQueue = index.serverQueue;
+
 
         if(!message.member.voiceChannel) return message.channel.send(`**You must be in a voice channel to use this command.**`);
 		//if(!serverQueue) return message.channel.send(`**I cannot skip because nothing is playing.**`)
