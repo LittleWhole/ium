@@ -5,7 +5,7 @@ module.exports = {
   name: 'calc',
   description: 'ium calculates something using given numbers and an operation.',
   description: 'Calculates the expression you give it.',
-  aliases: ['expression', 'process', 'calculate', 'compute'],
+  aliases: ['expression', 'process', 'calculate', 'compute', 'math'],
   args: true,
   usage: ['<operation> <num1> <num2 (if needed)> or ium calculate <expression>'],
   
