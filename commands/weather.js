@@ -1,9 +1,15 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 const snekfetch = require('snekfetch');
-exports.run = async (bot, message, args) => {
 
-    const query = args.join(" ");
+  module.exports = {
+      name: 'weather',
+      description: 'Displays the weather of a city or place you provide.',
+      usage: '<city>',
+      args: true,
+      async execute(bot, message, args){
+        const query = args.join(" ");
+
         const { body } = await snekfetch
             .get('https://query.yahooapis.com/v1/public/yql')
             .query({
@@ -42,8 +48,5 @@ exports.run = async (bot, message, args) => {
                 body.query.results.channel.wind.speed, true)
             .setFooter(`Powered by Yahoo Weather`);
         return message.channel.send(embed).catch(console.error);
- }
-
- module.exports.help = {
-    name: "weather"
-  }
+      },
+  };
