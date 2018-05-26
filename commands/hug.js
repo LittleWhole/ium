@@ -4,7 +4,7 @@ const neko = new client();
 
 module.exports = {
     name: 'hug',
-    description: 'Hugs the person you mention.',
+    description: 'Hugs someone.',
     usage: '<user>',
     args: true,
 	execute(bot, message, args){
