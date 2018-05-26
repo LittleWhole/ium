@@ -4,8 +4,10 @@ require("moment-duration-format");
 const config = require("../botconfig.json");
 let version = config.version;
 
-
-exports.run = async (bot, message, args) => {
+module.exports = {
+    name: 'servers',
+    description: 'Shows how many servers ium is on.',
+	async execute(bot, message, args){
     let botAvatar = bot.user.displayAvatarURL;
     let uptime = moment.duration(bot.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
     let usersize = bot.users.size;
@@ -26,8 +28,5 @@ exports.run = async (bot, message, args) => {
 
 
     message.channel.send(botEmbed);
-}
-
-module.exports.help = {
-  name: "servers"
-}
+	},
+};
