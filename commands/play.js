@@ -9,6 +9,8 @@ const bot = new Discord.Client({disableEveryone: true});
 const ytdl = require('ytdl-core');
 const YouTube = require('simple-youtube-api');
 const youtube = new YouTube(GOOGLE_API_KEY);
+//const queue = new Map ();
+//module.exports.queue = index.queue;
 
 let inline = true;
 let volumeValue = 5;
@@ -22,7 +24,8 @@ module.exports = {
     usage: '<song>',
     args: true,
 	async execute(bot, message, args){
-
+        const searchString = args.slice(1).join(' ');
+        const url = args[1] ? args[1].replace(/<(.+)>/g, '$1') : '';
         const voiceChannel = message.member.voiceChannel;
 		if(!voiceChannel) return message.channel.send(`**You must be in a voice channel to play music.**`);
 		//if(!args[1]) return message.channel.send(`**Provide a song to play.**`);
@@ -76,8 +79,74 @@ module.exports = {
 				}
 			}
 
-			return index.handleVideo(video, message, voiceChannel);
-		}
+			return handleVideo(video, message, voiceChannel);
+        }
         
-	},
+        function play(guild, song) {
+            const serverQueue = bot.queue.get(guild.id);
+            const channelQueue = bot.queue.get(guild.id);
+        
+            if (!song) {
+                serverQueue.voiceChannel.leave();
+                bot.queue.delete(guild.id);
+                return;
+            }
+            console.log(serverQueue.songs);
+        
+            const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
+                .on('end', reason => {
+                    if (reason === 'Stream is not generating quickly enough.') console.log('Song ended.');
+                    else console.log(reason);
+                    serverQueue.songs.shift();
+                    play(guild, serverQueue.songs[0]);
+                })
+                .on('error', error => console.error(error));
+            dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+        
+            channelQueue.textChannel.send(`Now playing - **${song.title}**`)
+        }
+
+        async function handleVideo(video, message, voiceChannel, playlist = false) {
+            const serverQueue = bot.queue.get(message.guild.id);
+            console.log(video);
+            const song = {
+                id: video.id,
+                title: Discord.escapeMarkdown(video.title),
+                url: `https://www.youtube.com/watch?v=${video.id}`
+            };
+            if(!serverQueue) {
+                const queueConstruct = {
+                    textChannel: message.channel,
+                    voiceChannel: voiceChannel,
+                    connection: null,
+                    songs: [],
+                    volume: 5,
+                    playing: true
+                };
+                bot.queue.set(message.guild.id, queueConstruct);
+        
+                queueConstruct.songs.push(song);
+        
+                try {
+                    var connection = await voiceChannel.join();
+                    queueConstruct.connection = connection;
+                    play(message.guild, queueConstruct.songs[0]);
+                } catch (error) {
+                    console.error(`Action unsuccessful - ${error}`);
+                    bot.queue.delete(message.guild.id);
+                    return message.channel.send(`Action unsuccessful - ${error}`)
+                }
+            } else {
+                serverQueue.songs.push(song);
+                console.log(serverQueue.songs)
+                if(playlist) return;
+                else return message.channel.send(`**${song.title}** has been added to the queue.`)
+            }
+            return;
+        }
+        
+            
+    },
+    
+    
 };

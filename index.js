@@ -32,9 +32,8 @@ let coolSeconds = 2;
 let inline = true;
 let volumeValue = 5;
 let curSent = 0;
-const queue = new Map ();
-module.exports.queue = queue;
-
+//const queue = new Map ();
+bot.queue = new Map();
 
 const { Client } = require('idiotic-api');
 bot.IdioticAPI = new Client(tokens.token || 'token', { dev: true });
@@ -249,6 +248,7 @@ bot.on("message", message => {
 
 	message.channel.send(moneyEmbed).then(message => {message.delete(8000)});
 
+	bot.serverQueue = bot.queue.get(message.guild.id);
 	}
 });
 
@@ -367,69 +367,67 @@ bot.on('message', async (message) => {
 
 	return;
 });
+/** 
 
-module.exports.handleVideo = async function handleVideo(video, message, voiceChannel, playlist = false) {
-	const serverQueue = queue.get(message.guild.id);
-	console.log(video);
-	const song = {
-		id: video.id,
-		title: Discord.escapeMarkdown(video.title),
-		url: `https://www.youtube.com/watch?v=${video.id}`
-	};
-	if(!serverQueue) {
-		const queueConstruct = {
-			textChannel: message.channel,
-			voiceChannel: voiceChannel,
-			connection: null,
-			songs: [],
-			volume: 5,
-			playing: true
-		};
-		queue.set(message.guild.id, queueConstruct);
-
-		queueConstruct.songs.push(song);
-
-		try {
-			var connection = await voiceChannel.join();
-			queueConstruct.connection = connection;
-			play(message.guild, queueConstruct.songs[0]);
-		} catch (error) {
-			console.error(`Action unsuccessful - ${error}`);
-			queue.delete(message.guild.id);
-			return message.channel.send(`Action unsuccessful - ${error}`)
-		}
-	} else {
-		serverQueue.songs.push(song);
-		console.log(serverQueue.songs)
-		if(playlist) return;
-		else return message.channel.send(`**${song.title}** has been added to the queue.`)
-	}
-	return;
+function play(guild, song, bot, message) {
+    const serverQueue = bot.queue.get(guild.id);
+    if(!song) {
+        return bot.queue.delete(guild.id);
+    }
+    const dispatcher = serverQueue.connection.playStream(ytdl(song.url), { filter: "audioonly" });
+    dispatcher.on("end", () => {
+        serverQueue.songs.shift();
+        setTimeout(() => {
+            if(serverQueue.loop === true) {
+                play(guild, serverQueue.songs[0], bot, message);
+            } else {
+                serverQueue.songs.shift();
+                play(guild, serverQueue.songs[0], bot, message);
+            }
+        }, 250);
+    });
+    if(message.guild.id !== "369990397004349440") dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+    else dispatcher.setVolumeLogarithmic(0.5 / 5);
+    message.channel.send(`Started playing **${serverQueue.songs[0].title}**`);
 }
 
-function play(guild, song) {
-	const serverQueue = queue.get(guild.id);
-	const channelQueue = queue.get(guild.id);
+async function handleVideo(video, message, voiceChannel, bot, playlist = false) {
+    const serverQueue = bot.queue.get(message.guild.id);
+    const song = {
+        id: video.id,
+        title: video.title,
+        url: `https://www.youtube.com/watch?v=${video.id}`,
+    };
+    if(!serverQueue) {
+        var queueConstruct = {
+            textChannel: message.channel,
+            voiceChannel: voiceChannel,
+            connection: null,
+            songs: [],
+            volume: 2,
+            loop: false,
+            playing: true
+        };
 
-	if (!song) {
-		serverQueue.voiceChannel.leave();
-		queue.delete(guild.id);
-		return;
-	}
-	console.log(serverQueue.songs);
+        bot.queue.set(message.guild.id, queueConstruct);
 
-	const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
-		.on('end', reason => {
-			if (reason === 'Stream is not generating quickly enough.') console.log('Song ended.');
-			else console.log(reason);
-			serverQueue.songs.shift();
-			play(guild, serverQueue.songs[0]);
-		})
-		.on('error', error => console.error(error));
-	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+        queueConstruct.songs.push(song);
 
-	channelQueue.textChannel.send(`Now playing - **${song.title}**`)
-}
+        try {
+            var connection = await voiceChannel.join();
+            queueConstruct.connection = connection;
+            play(message.guild, queueConstruct.songs[0], bot, message);
+        } catch (error) {
+            message.channel.send(error.stack);
+        }
+    } else {
+        serverQueue.songs.push(song);
+        if(playlist) return undefined;
+        else return message.channel.send(`**${song.title}** has been added to the queue`);
+    }
+    return undefined;
+}*/
+
 
 
 bot.login(tokens.token);
