@@ -1,5 +1,7 @@
 const Discord = require("discord.js");
 const ms = require("ms");
+const bot = new Discord.Client({disableEveryone: true});
+bot.commands = new Discord.Collection();
 
 exports.run = async (bot, message, args) => {
     const m = await message.channel.send("<a:cursor:404001393360502805> Pinging...");
