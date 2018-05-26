@@ -326,7 +326,7 @@ bot.on('message', async (message) => {
 		if(!serverQueue) return message.channel.send(`**I cannot skip because nothing is playing.**`)
 		serverQueue.connection.dispatcher.end(`Skip Command Used`);
 		return;
-	}*/ if(message.content.startsWith(`${ciprefix}volume`)){
+	} if(message.content.startsWith(`${ciprefix}volume`)){
 		if(!message.member.voiceChannel) return message.channel.send(`**You must be in a voice channel to use this command.**`);
 		if(!serverQueue) return message.channel.send(`**You must play something to use this command.**`)
 		if(!args[2]) return message.channel.send(`The current volume is **${serverQueue.volume}**`)
@@ -338,7 +338,7 @@ bot.on('message', async (message) => {
 		serverQueue.connection.dispatcher.setVolumeLogarithmic(args[2] / 5);
 		message.channel.send(`Volume - **${args[2]}**`)
 		return;
-	} else if(message.content === (`${ciprefix}np`) || message.content === (`${ciprefix}playing`) || message.content === (`${ciprefix}nowplaying`)){
+	}*/ if(message.content === (`${ciprefix}np`) || message.content === (`${ciprefix}playing`) || message.content === (`${ciprefix}nowplaying`)){
 		//if(!message.member.voiceChannel) return message.channel.send(`**You must be in a voice channel to use this command.**`);
 		if(!serverQueue) return message.channel.send(`**There is nothing playing.**`);
 		return message.channel.send(`🎶 Now playing - **${serverQueue.songs[0].title}**`);
