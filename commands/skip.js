@@ -23,12 +23,12 @@ module.exports = {
 	async execute(bot, message, args){
         const voiceChannel = message.member.voiceChannel;
 
-        const queue = index.queue;
+        const queue = bot.queue.get(message.guild.id);
         const serverQueue = index.serverQueue;
 
         if(!message.member.voiceChannel) return message.channel.send(`**You must be in a voice channel to use this command.**`);
-		if(!serverQueue) return message.channel.send(`**I cannot skip because nothing is playing.**`)
-		serverQueue.connection.dispatcher.end(`Skip Command Used`);
+		//if(!serverQueue) return message.channel.send(`**I cannot skip because nothing is playing.**`)
+		queue.connection.dispatcher.end(`Skip Command Used`);
         
 	},
 };
