@@ -1,17 +1,17 @@
 const Discord = require("discord.js");
 
-exports.run = async (bot, message, args) => {
-    try {
-        await message.react('🇦');
-        await message.react('🇧');
-        await message.react('🇨');
-    }
-    catch(error) {
-        
-    }
-}
-
-
-module.exports.help = {
-    name: "react"
-  }
+module.exports = {
+    name: 'react',
+    description: 'The dumbest command I ever made. ium reacts to your message',
+    aliases: ['ign'],
+	async execute(bot, message, args){
+        try {
+            await message.react('🇦');
+            await message.react('🇧');
+            await message.react('🇨');
+        }
+        catch(error) {
+            
+        }
+	},
+};
