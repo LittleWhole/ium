@@ -3,7 +3,7 @@ const client = require('nekos.life');
 const neko = new client();
 
 module.exports = {
-    name: 'meme',
+    name: 'tickle',
     description: 'Tickles someone.',
     usage: '<user>',
     args: true,
