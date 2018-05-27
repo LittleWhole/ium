@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 
 module.exports = {
     name: 'npm',
-    description: 'Searches up an npm package',
+    description: 'Searches up an npm package.',
     usage: '<npm package>',
     args: true,
     aliases: ['npmsearch'],

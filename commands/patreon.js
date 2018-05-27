@@ -2,8 +2,9 @@ const Discord = require("discord.js");
 let inline = true
 
 module.exports = {
-    name: 'off',
-    description: '',
+    name: 'patreon',
+    description: 'Provides a link to ium\'s patreon.',
+    aliases: ['donate'],
 	async execute(bot, message, args){
         let botEmbed = new Discord.RichEmbed()
         .setColor('#000000')
