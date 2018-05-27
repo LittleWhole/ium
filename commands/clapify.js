@@ -3,7 +3,7 @@ const randomizeCase = word => word.split('').map(c => Math.random() > 0.5 ? c.to
 
 module.exports = {
     name: 'clapify',
-    description: 'Replaces the spaces in your sentence with clap emojis, and adds random capitalization .',
+    description: 'Replaces the spaces in your sentence with clap emojis, and adds random capitalization.',
     aliases: ['clap', 'claptext'],
     usage: '<text> <text>',
     args: true,

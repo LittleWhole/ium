@@ -5,7 +5,7 @@ const ft = new Fortnite(tokens.fortnite);
 
 module.exports = {
     name: 'fortnite',
-    description: 'Finds fortnite stats on the user you provide..',
+    description: 'Finds fortnite stats on the user you provide.',
     usage: '<platform [pc/xbox/ps4]> <username>',
     aliases: ['ftn'],
     args: true,

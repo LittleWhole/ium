@@ -3,7 +3,6 @@ const Discord = require('discord.js'),
 
 module.exports = {
   name: 'calc',
-  description: 'ium calculates something using given numbers and an operation.',
   description: 'Calculates the expression you give it.',
   aliases: ['expression', 'process', 'calculate', 'compute', 'math'],
   args: true,
