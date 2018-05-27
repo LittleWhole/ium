@@ -2,7 +2,7 @@ const shorten = require('isgd');
 
 module.exports = {
     name: 'reload',
-    description: 'Reloads the command you provide.',
+    description: 'Shortens the URL that you provide.',
     usage: '<URL>',
     args: true,
 	async execute(bot, message, args){

@@ -2,7 +2,7 @@ const Discord = require("discord.js")
 
 module.exports = {
 	  name: 'quote',
-    description: 'ium will quote a message',
+    description: 'ium will quote a message.',
     aliases: ['quo', 'reference'],
     usage: '<message ID>',
     args: true,
