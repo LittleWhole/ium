@@ -5,7 +5,7 @@ let iumics = require("../data/money.json");
 
 module.exports = {
     name: 'user',
-    description: 'Displays information and stats on a user',
+    description: 'Displays information and stats on a user.',
     usage: '<user (optional)>',
 	execute(bot, message, args){
 
