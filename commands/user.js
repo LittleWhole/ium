@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const botconfig = require("../botconfig");
-const sm = require("string-similarity");
 let xp = require("../data/xp.json");
 let iumics = require("../data/money.json");
 
@@ -20,20 +19,13 @@ module.exports = {
             streaming: "<:streaming:313956277132853248>",
             offline: "Offline/Invisible <:offline:313956277237710868>"
           }
-
-        let members = [];
-        let indexes = [];
-        message.guild.members.forEach(function(member) {
-            members.push(member.user.username);
-            indexes.push(member.id);
-        })
-        let match = sm.findBestMatch(args.join(' '), members);
-        let username = match.bestMatch.target;
-        let member = message.guild.members.get(indexes[members.indexOf(username)]);
+    
+        const member = message.mentions.members.first() || message.guild.members.get(args[0]) || message.member;
+        let target = message.mentions.users.first() || message.author;
     
                 let embed = new Discord.RichEmbed()
                     .setAuthor(member.user.username)
-                    .setThumbnail((username.displayAvatarURL))
+                    .setThumbnail((target.displayAvatarURL))
                     .setColor("#000000")
                     .addField("Username", `${member.user.tag}`, inline)
                     .addField("ID", member.user.id, inline)
