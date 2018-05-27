@@ -3,7 +3,7 @@ const Discord = require("discord.js")
 module.exports = {
     name: 'choose',
     description: 'ium chooses something between the two parameters you give it.',
-    usage: 'Bread Eggs',
+    usage: '<thing1> <thing2>',
     aliases: ['pick'],
     args: true,
 	execute(bot, message, args){
