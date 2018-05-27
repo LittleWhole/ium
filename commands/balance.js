@@ -5,7 +5,7 @@ let iumics = require("../data/money.json");
 
 module.exports = {
 	name: 'balance',
-    description: 'Displays an enlarged image of a user\'s avatar, with a direct link to it.',
+    description: 'Displays how much iumics you have in your bank. (Earn more iumics by using more bot commands)',
     aliases: ['bal', 'bank', 'money'],
     usage: '<user (optional)>',
     args: false,
