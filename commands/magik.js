@@ -4,7 +4,7 @@ const snekfetch = require('snekfetch');
 
 module.exports = {
     name: 'magik',
-    description: 'Adds magik to your image',
+    description: 'Adds magik to your image.',
     usage: '<link or useravtar>',
     args: true,
     aliases: ['magic'],

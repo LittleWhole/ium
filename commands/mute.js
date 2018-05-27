@@ -4,7 +4,7 @@ const ms = require("ms");
 
 module.exports = {
     name: 'magik',
-    description: 'Mocks someone or something.',
+    description: 'Mutes the user that you mention from your server if you have permission to mute them.',
     usage: '<user>',
     args: true,
 	async execute(bot, message, args){
