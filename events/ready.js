@@ -5,6 +5,9 @@ const api = new PlexiDevApi(tokens.plexitoken);
 
 module.exports = (bot, guild, member, messages) => {
 
+	let users = 0;
+    bot.guilds.map(g => users += g.memberCount);
+
 	//PuTTy
 	console.log(`${bot.user.username} is online`);
 	console.log(`${bot.user.tag} running on ${bot.guilds.size} guilds with ${users} users.`);

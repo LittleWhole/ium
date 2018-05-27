@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
-const botconfig = require("./botconfig.json");
-const tokens = require("./tokens.json");
+const botconfig = require("../botconfig.json");
+const tokens = require("../tokens.json");
 const Botspace = require('botlist.space');
 const PlexiDevApi = require('plexibotsapi');
 const api = new PlexiDevApi(tokens.plexitoken);
