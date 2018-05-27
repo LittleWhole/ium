@@ -59,7 +59,7 @@ module.exports = {
 
 					let index = 0;
 					let selectionEmbed = new Discord.RichEmbed()
-					.setAuthor(`Song Selection - Type the value of a song to select a result.`, "https://ium-bot.github.io/ium.jpg")
+					.setAuthor(`Song Selection - Type the value of a song to select a result.`, "https://ium-bot.github.io/ium.png")
 					.setColor("#bf8aff")
 					.setDescription(`${videos.map(video2 => `**${++index} -** ${video2.title}`).join('\n')}`)
 					.setFooter(`Command cancels in 30 seconds.`);

@@ -62,7 +62,7 @@ let inline = true
       
           let botAvatar = bot.user.displayAvatarURL;
           let botEmbed = new Discord.RichEmbed()
-          .setAuthor("ium", "https://ium-bot.github.io/ium.jpg")
+          .setAuthor("ium", "https://ium-bot.github.io/ium.png")
           .setColor('#000000')
           .setThumbnail(botAvatar)
           .setDescription("**Developer**: Tetra#4616 | **Version:** " + config.version + " | **Library:** discord.js\nium is an aesthetic, simple, multi-purpose discord bot that has many commands, ranging from moderation commands to fun commands.")

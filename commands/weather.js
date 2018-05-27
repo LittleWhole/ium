@@ -19,7 +19,7 @@ const snekfetch = require('snekfetch');
         if (!body.query.count) return msg.say('Location Not Found.');
         const embed = new Discord.RichEmbed()
             .setColor('RANDOM')
-            .setAuthor(`${body.query.results.channel.location.city}, ${body.query.results.channel.location.country}`, 'https://ium-bot.github.io/ium.jpg')
+            .setAuthor(`${body.query.results.channel.location.city}, ${body.query.results.channel.location.country}`, 'https://ium-bot.github.io/ium.png')
             .setURL(body.query.results.channel.link)
             .setTimestamp()
             .addField('City',

@@ -12,7 +12,7 @@ module.exports = (bot, guild, member) => {
 
     let sicon = guild.iconURL;
     let guildEmbed = new Discord.RichEmbed()
-    .setAuthor("ium", "https://ium-bot.github.io/ium.jpg")
+    .setAuthor("ium", "https://ium-bot.github.io/ium.png")
     .setColor('#34e7e4')
     .setThumbnail(sicon)
     .setDescription("ium has been **removed** from a server :(")

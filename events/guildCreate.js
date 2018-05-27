@@ -19,7 +19,7 @@ module.exports = (bot, guild, member) => {
 
     let sicon = guild.iconURL;
     let guildEmbed = new Discord.RichEmbed()
-    .setAuthor("ium", "https://ium-bot.github.io/ium.jpg")
+    .setAuthor("ium", "https://ium-bot.github.io/ium.png")
     .setColor('#f5a3fa')
     .setThumbnail(sicon)
     .setDescription("ium has been **added** to a server :)")

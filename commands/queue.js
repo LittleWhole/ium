@@ -28,7 +28,7 @@ module.exports = {
 
 		//if(!bot.serverQueue) return message.channel.send(`**There are no songs in the queue.**`);
 		let queueEmbed = new Discord.RichEmbed()
-		.setAuthor(`Queue - ${message.guild.name}`, "https://ium-bot.github.io/ium.jpg")
+		.setAuthor(`Queue - ${message.guild.name}`, "https://ium-bot.github.io/ium.png")
 		.setColor("#bf8aff")
 		.setDescription(`${queue.songs.map(song => `**${++index} -** ${song.title}`).join('\n')}`)
 		.setFooter(`Now Playing - ${queue.songs[0].title}`);

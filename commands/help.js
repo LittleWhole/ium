@@ -16,7 +16,7 @@ module.exports = {
             
             const serverEmbed = new Discord.RichEmbed()
             .setColor('#ffffff')
-            .setAuthor("ium's commands", "https://ium-bot.github.io/ium.jpg")
+            .setAuthor("ium's commands", "https://ium-bot.github.io/ium.png")
             .setColor('#000000')
             .setDescription("Prefix: `ium ` | All commands can be found here: https://ium-bot.github.io/commands")
             .addField("Moderation", "`ban` `clear` `kick` `mute` `poll` `unmute`")

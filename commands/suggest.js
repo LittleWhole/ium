@@ -20,7 +20,7 @@ module.exports = {
 	db.run(`INSERT INTO suggestions (Content, Author) VALUES ('${args.join(" ")}', '${message.author.id}');`);
 	db.each(`SELECT * FROM suggestions WHERE Author='${message.author.id}' AND Content='${args.join(" ")}';`, function(err, row){
         let suggestEmbed = new Discord.RichEmbed()
-        .setAuthor("Suggestion", "https://ium-bot.github.io/ium.jpg")
+        .setAuthor("Suggestion", "https://ium-bot.github.io/ium.png")
         .addField("User", `${message.author.tag}`)
         .addField("Suggestion", `${args.join(" ")}`)
 	      .setFooter(row.ID)

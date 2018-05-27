@@ -9,9 +9,9 @@ module.exports = {
     aliases: ['info', 'bot', 'botinfo'],
     execute(bot, message, args) {
         let botEmbed = new Discord.RichEmbed()
-        .setAuthor("ium", "https://ium-bot.github.io/ium.jpg")
+        .setAuthor("ium", "https://ium-bot.github.io/ium.png")
         .setColor('#000000')
-        .setThumbnail("https://ium-bot.github.io/ium.jpg")
+        .setThumbnail("https://ium-bot.github.io/ium.png")
         .setDescription("**Developer**: Tetra#4616 | **Version:** " + config.version + " | **Library:** discord.js\nium is an aesthetic, simple, multi-purpose discord bot that has many commands, ranging from moderation commands to fun commands.")
         .addField("Website", "https://ium-bot.github.io", inline)
         .addField("Invite", "https://ium-bot.github.io/invite", inline)

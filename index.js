@@ -79,7 +79,7 @@ dbl.webhook.on('ready', hook => {
 
 	console.log(`User with ID ${vote.user} just voted!`);
 	let hookEmbed = new Discord.RichEmbed()
-	.setAuthor("ium", "https://ium-bot.github.io/ium.jpg")
+	.setAuthor("ium", "https://ium-bot.github.io/ium.png")
 	.setColor('#90e386')
 	.setDescription("Webhook running at http://" + hook.hostname + ":" + hook.port + ":" + hook.path);
 
@@ -88,7 +88,7 @@ dbl.webhook.on('ready', hook => {
 dbl.webhook.on('vote', vote => {
   console.log(`User with ID ${vote.user} just voted!`);
 	let voteEmbed = new Discord.RichEmbed()
-	.setAuthor("ium", "https://ium-bot.github.io/ium.jpg")
+	.setAuthor("ium", "https://ium-bot.github.io/ium.png")
 	.setColor('#f55783')
 	.setDescription("User with ID " + vote.user + "just voted! :)")/
 
