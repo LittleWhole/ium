@@ -9,7 +9,6 @@ module.exports = {
     usage: '<user>',
     args: true,
     execute(bot, message, args) {
-        if(!args[0]) return message.reply("You need to type some text!");
         let members = [];
         let indexes = [];
         message.guild.members.forEach(function(member) {
