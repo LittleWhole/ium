@@ -22,8 +22,6 @@ const { promisify } = require("util");
 const readdir = promisify(require("fs").readdir);
 const Enmap = require("enmap");
 const EnmapLevel = require("enmap-level");
-const Botspace = require('botlist.space');
-const botspace = new Botspace(botconfig.iumID, "6c9d38 4TRY THIS TIME :)1a76403b38fc2422e8973d636fbc9c289787a07fb1632000db654b6a19d0cdf");
 let version = botconfig.version;
 let iumics = require("./data/money.json");
 let xp = require("./data/xp.json");
@@ -54,17 +52,6 @@ for (const file of commandFiles) {
 }
 
 const cooldowns = new Discord.Collection();
-
-	/** 
-	fs.readdir("./commands/", (err, files) => {
-		if (err) return console.error(err);
-		files.forEach(file => {
-		let eventFunction = require(`./commands/${file}`);
-		let eventName = file.split(".")[0];
-		bot.on(eventName, (...args) => eventFunction.run(bot, ...args));
-		});
-	});
-	*/
   
 const init = async () => {
   const evtFiles = await readdir("./events/");
@@ -108,13 +95,6 @@ dbl.webhook.on('vote', vote => {
 	bot.channels.filter(c => c.id === '434521909745549333').forEach(channel => channel.send(voteEmbed));
 });
 */
-
-botspace.postServerCount(bot.guilds.size).then(() => { 
-    console.log('Set the current bot\'s server count to ' + bot.guilds.size + ' guilds.');
-}).catch((e) => {
-	console.error('Failed to post server count. ' + e.code);
-	console.error(e);
-});
 
 
 bot.on("message", message => {
