@@ -1,7 +1,8 @@
 const request = require("request");
 
 module.exports = {
-	name: 'bitcoin',
+    name: 'bitcoin',
+    description: 'Converts to bitcoin.',
     usage: '<curreny> <value>',
     args: true,
     async execute(bot, message, args) {

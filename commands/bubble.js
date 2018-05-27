@@ -3,7 +3,7 @@ const Discord = require('discord.js')
 
 module.exports = {
 	name: 'bubble',
-    description: 'Popps a bubble from a bubble wrap.',
+    description: 'Pops a bubble from a bubble wrap.',
     aliases: ['pop', 'bubblepop'],
     async execute (bot, message, args) {
         let TotalBubbles;
