@@ -19,33 +19,33 @@ module.exports = {
         const member = message.member;
         var numb = Math.floor(Math.random() * 150);
         if (numb <= 50 && numb >= 0) {
-          var choice2 = "paper";
+          var botChoice = "paper";
         } else if (numb >= 100 && numb <= 150) {
-          var choice2 = "rock";
+          var botChoice = "rock";
         } else if (numb >= 50 && numb <= 100) {
-          var choice2 = "scissors";
+          var botChoice = "scissors";
         }
 
         var choice = args[0];
         if (choice == "Paper" || choice == "P" || choice == "paper" ) {
-            if (choice2 == "scissors") {
+            if (botChoice == "scissors") {
                 let rpsEmbed4 = new Discord.RichEmbed()
                 .setColor("#f55783")
                 .setAuthor(message.author.username)
                 .setAuthor("Rock, Paper, Scissors")
                 .addField('You Put', choice)
-                .addField('I Put', choice2)
-                .addField("Result", `**${choice2}** beats **${choice}**! I win!`)
+                .addField('I Put', botChoice)
+                .addField("Result", `**${botChoice}** beats **${choice}**! I win!`)
                 .setFooter(`${message.author.username} +0 iumics`, member.displayAvatarURL);
                 return message.channel.send(rpsEmbed4)
-              } else if (choice2 == "paper") {
+              } else if (botChoice == "paper") {
                 let rpsEmbed5 = new Discord.RichEmbed()
                 .setColor("#f55783")
                 .setAuthor(message.author.username)
                 .setAuthor("Rock, Paper, Scissors")
                 .addField('You Put', choice)
-                .addField('I Put', choice2)
-                .addField("Summary", `**${choice2}** doesn't beat **${choice}**! It's a tie!`);
+                .addField('I Put', botChoice)
+                .addField("Summary", `**${botChoice}** doesn't beat **${choice}**! It's a tie!`);
                 return message.channel.send(rpsEmbed5)
               } else {
                 iumics[message.author.id] = {
@@ -56,52 +56,85 @@ module.exports = {
                 .setAuthor(message.author.username)
                 .setAuthor("Rock, Paper, Scissors")
                 .addField('You Put', choice)
-                .addField('I Put', choice2)
-                .addField("Result", `**${choice}** beats **${choice2}**! You win!`)
+                .addField('I Put', botChoice)
+                .addField("Result", `**${choice}** beats **${botChoice}**! You win!`)
                 .setFooter(`${message.author.username} +${iumEarn} iumics`, member.displayAvatarURL);
                 return message.channel.send(rpsEmbed2)
               }
         }
         if (choice == "Rock" || choice == "r" || choice == "rock" ) {
-            if (choice2 == "scissors") {
+            if (botChoice == "scissors") {
+                iumics[message.author.id] = {
+                    iumics: sIumics + iumEarn
+                };
                 let rpsEmbed4 = new Discord.RichEmbed()
                 .setColor("#f55783")
                 .setAuthor(message.author.username)
                 .setAuthor("Rock, Paper, Scissors")
                 .addField('You Put', choice)
-                .addField('I Put', choice2)
-                .addField("Result", `**${choice2}** beats **${choice}**! I win!`)
-                .setFooter(`${message.author.username} +0 iumics`, member.displayAvatarURL);
+                .addField('I Put', botChoice)
+                .addField("Result", `**${choice}** beats **${botChoice}**! You win!`)
+                .setFooter(`${message.author.username} +${iumEarn} iumics`, member.displayAvatarURL);
                 return message.channel.send(rpsEmbed4)
-              } else if (choice2 == "paper") {
+              } else if (botChoice == "rock") {
                 let rpsEmbed5 = new Discord.RichEmbed()
                 .setColor("#f55783")
                 .setAuthor(message.author.username)
                 .setAuthor("Rock, Paper, Scissors")
                 .addField('You Put', choice)
-                .addField('I Put', choice2)
-                .addField("Summary", `**${choice2}** doesn't beat **${choice}**! It's a tie!`);
+                .addField('I Put', botChoice)
+                .addField("Summary", `**${botChoice}** doesn't beat **${choice}**! It's a tie!`);
                 return message.channel.send(rpsEmbed5)
               } else {
-                iumics[message.author.id] = {
-                    iumics: sIumics + iumEarn
-                };
                 let rpsEmbed2 = new Discord.RichEmbed()
                 .setColor("#f55783")
                 .setAuthor(message.author.username)
                 .setAuthor("Rock, Paper, Scissors")
                 .addField('You Put', choice)
-                .addField('I Put', choice2)
-                .addField("Result", `**${choice}** beats **${choice2}**! You win!`)
+                .addField('I Put', botChoice)
+                .addField("Result", `**${botChoice}** beats **${choice}**! I win!`)
+                .setFooter(`${message.author.username} +0 iumics`, member.displayAvatarURL);
+                return message.channel.send(rpsEmbed2)
+              }
+        }
+        if (choice == "Scissors" || choice == "s" || choice == "scissors" ) {
+            if (botChoice == "scissors") {
+                let rpsEmbed5 = new Discord.RichEmbed()
+                .setColor("#f55783")
+                .setAuthor(message.author.username)
+                .setAuthor("Rock, Paper, Scissors")
+                .addField('You Put', choice)
+                .addField('I Put', botChoice)
+                .addField("Summary", `**${botChoice}** doesn't beat **${choice}**! It's a tie!`)
+                .setFooter(`${message.author.username} +0 iumics`, member.displayAvatarURL);
+                return message.channel.send(rpsEmbed5)
+                return message.channel.send(rpsEmbed4)
+              } else if (botChoice == "rock") {
+                let rpsEmbed5 = new Discord.RichEmbed()
+                .setColor("#f55783")
+                .setAuthor(message.author.username)
+                .setAuthor("Rock, Paper, Scissors")
+                .addField('You Put', choice)
+                .addField('I Put', botChoice)
+                .addField("Summary", `**${botChoice}** beats **${choice}**! I win!`);
+                return message.channel.send(rpsEmbed5)
+              } else {
+                let rpsEmbed2 = new Discord.RichEmbed()
+                .setColor("#f55783")
+                .setAuthor(message.author.username)
+                .setAuthor("Rock, Paper, Scissors")
+                .addField('You Put', choice)
+                .addField('I Put', botChoice)
+                .addField("Result", `**${choice}** beats **${botChoice}**! You win!`)
                 .setFooter(`${message.author.username} +${iumEarn} iumics`, member.displayAvatarURL);
                 return message.channel.send(rpsEmbed2)
               }
         }
 
           /**
-          if (choice2 == "scissors") {
+          if (botChoice == "scissors") {
             var response = "I'm choosing **Scissors**! :v: I win!"
-          } else if (choice2 == "paper") {
+          } else if (botChoice == "paper") {
             var response = "I'm choosing **Paper**! :hand_splayed: It's a tie!"
           } else {
             var response = "I'm choosing **Rock**! :punch: You win!"
@@ -110,15 +143,15 @@ module.exports = {
         } else if (choice == "rock" || choice == "r") {
           var numb = Math.floor(Math.random() * 100);
           if (numb <= 50) {
-            var choice2 = "paper";
+            var botChoice = "paper";
           } else if (numb > 50) {
-            var choice2 = "rock";
+            var botChoice = "rock";
           } else {
-            var choice2 = "scissors";
+            var botChoice = "scissors";
           }
-          if (choice2 == "paper") {
+          if (botChoice == "paper") {
             var response = "I'm choosing **Paper**! :hand_splayed: I win!"
-          } else if (choice2 == "rock") {
+          } else if (botChoice == "rock") {
             var response = "I'm choosing **Rock**! :punch: It's a tie!"
           } else {
             var response = "I'm choosing **Scissors**! :v: You win!"
@@ -127,15 +160,15 @@ module.exports = {
         } else if (choice == "scissors" || choice == "s") {
           var numb = Math.floor(Math.random() * 100);
           if (numb <= 50) {
-            var choice2 = "paper";
+            var botChoice = "paper";
           } else if (numb > 50) {
-            var choice2 = "rock";
+            var botChoice = "rock";
           } else {
-            var choice2 = "scissors";
+            var botChoice = "scissors";
           }
-          if (choice2 == "rock") {
+          if (botChoice == "rock") {
             var response = "I'm choosing **Paper**! :hand_splayed: You win!"
-          } else if (choice2 == "scissors") {
+          } else if (botChoice == "scissors") {
             var response = "I'm choosing **Scissors**! :v: It's a tie!"
           } else {
             var response = "I'm choosing **Rock**! :punch: I win!"
