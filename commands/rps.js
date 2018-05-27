@@ -10,6 +10,7 @@ module.exports = {
   aliases: ['rockpaperscissors'],
   args: true,
   usage: ['<rock/paper/scissors>'],
+  cooldown: 8,
     execute(bot, message, args) {
         if (!iumics[message.member.id]) iumics[message.member.id] = 0;
 
