@@ -19,11 +19,20 @@ module.exports = {
 			return message.reply('**You must to provide a number between 1 and 99.**');
 		}
 
-		message.channel.bulkDelete(amount, true).catch(err => {
-			console.log(err);
-			message.channel.send('**There was an error trying to prune messages in this channel!** (Cannot delete more that 100 messages at once, and messages that are 14 days or older.)');
-    });
-    
-    message.channel.send(`Deleted **${args[0]}** messages.`).then(msg => msg.delete(5000));
+		if (amount == 2){
+			message.channel.bulkDelete(amount, true).catch(err => {
+				console.log(err);
+				message.channel.send('**There was an error trying to prune messages in this channel!** (Cannot delete more that 100 messages at once, and messages that are 14 days or older.)');
+			});
+		
+			message.channel.send(`Deleted **${args[0]}** message.`).then(msg => msg.delete(5000));
+		} else {
+			message.channel.bulkDelete(amount, true).catch(err => {
+				console.log(err);
+				message.channel.send('**There was an error trying to prune messages in this channel!** (Cannot delete more that 100 messages at once, and messages that are 14 days or older.)');
+			});
+		
+			message.channel.send(`Deleted **${args[0]}** messages.`).then(msg => msg.delete(5000));
+		}
 	},
 };
