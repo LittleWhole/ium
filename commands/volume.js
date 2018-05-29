@@ -22,7 +22,7 @@ module.exports = {
     usage: '<volume (optional)>',
 	async execute(bot, message, args){
 
-        const queue = this.queue.get(message.guild.id);
+        const queue = bot.queue.get(message.guild.id);
 
 		if(!message.member.voiceChannel) return message.channel.send(`**You must be in a voice channel to use this command.**`);
 		if(!queue) return message.channel.send(`**You must play something to use this command.**`)

@@ -64,8 +64,8 @@ module.exports = {
                 result = 'Error: "Invalid Input"';
                 
          }
-         if (isNan(one)) result = 'Error: "Input must be an integer"';
-         if (isNan(two) && (operation === "exponent" || operation === "n-root")) result = 'Error: "Input(s) must be integer(s)"';
+         //if (isNan(one)) result = 'Error: "Input must be an integer"';
+         //if (isNan(two) && (operation === "exponent" || operation === "n-root")) result = 'Error: "Input(s) must be integer(s)"';
                 
             // Configure Embed
             embed.addField('Input', `\`\`\`js\n${args.join(' ')}\`\`\``)

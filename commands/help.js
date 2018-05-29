@@ -19,12 +19,13 @@ module.exports = {
             .setAuthor("ium's commands", "https://ium-bot.github.io/ium.png")
             .setColor('#000000')
             .setDescription("Prefix: `ium ` | All commands can be found here: https://ium-bot.github.io/commands")
-            .addField("Moderation", "`ban` `clear` `kick` `mute` `poll` `unmute`")
-            .addField("Info", "`about` `developer` `discord` `github` `ping` `server` `stats` `user`")
-            .addField("Utils", "`announce` `avatar` `date` `define` `dmhelp` `hastebin` `help` `lmgtfy` `ping` `profile` `shorten` `translate` `vote` `weather`")
-            .addField("Fun", "`8ball` `bond` `choose` `clap` `dog` `level` `profile` `rate` `reverse` `say` `scale` `wave`")
-            .addField("Economy", "`balance` `pay`")
-            .addField("Math", "`divide` `exponent` `minus` `sqrt` `times`")
+            .addField("Moderation", "`addrole` `announce` `ban` `clear` `kick` `mute` `poll` `removerole` `unmute` `warn`")
+            .addField("Info", "`about` `deprecated` `developer` `discord` `dmhelp` github` `help` `invite` `patreon` `ping` `stats` `trello` `user` `version` `website`")
+            .addField("Utils", "`autouser` `announce` `avatar` `bitcoin` `calc` `crypto` `define` `fortnite` `hastebin` `invites` `jumboemoji` `lmgtfy` `nick` `npm` `say` `server` `shorten` `suggest` `time` `translate` `user` `vote` `weather`")
+            .addField("Fun", "`8ball` `asciify` `bond` `bubble` `choose` `clapify` `dab` `draw` `fight` `fliptext` `hug` `joke` `julio` `kill` `level` `literally` `mock` `profile` `quiz` `rate` `reverse` `rps` `sheug` `slap` `tickle` `wur` `yomama`")
+            .addField("Economy", "`daily` `balance` `pay`")
+			.addField("Image", "`bird` `bunny` `cat` `dab` `dog` `draw` `magik` `meme`")
+			.addField("Music", "`join` `pause` `play` `playing` `resume` `skip` `stop` `volume`")
             .setFooter("Type ium dmhelp for more info on commands.");
         
             message.channel.send(serverEmbed);
