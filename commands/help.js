@@ -20,7 +20,7 @@ module.exports = {
             .setColor('#000000')
             .setDescription("Prefix: `ium ` | All commands can be found here: https://ium-bot.github.io/commands")
             .addField("Moderation", "`addrole` `announce` `ban` `clear` `kick` `mute` `poll` `removerole` `unmute` `warn`")
-            .addField("Info", "`about` `deprecated` `developer` `discord` `dmhelp` github` `help` `invite` `patreon` `ping` `stats` `trello` `user` `version` `website`")
+            .addField("Info", "`about` `deprecated` `developer` `discord` `dmhelp` `github` `help` `invite` `patreon` `ping` `stats` `trello` `user` `version` `website`")
             .addField("Utils", "`autouser` `announce` `avatar` `bitcoin` `calc` `crypto` `define` `fortnite` `hastebin` `invites` `jumboemoji` `lmgtfy` `nick` `npm` `say` `server` `shorten` `suggest` `time` `translate` `user` `vote` `weather`")
             .addField("Fun", "`8ball` `asciify` `bond` `bubble` `choose` `clapify` `dab` `draw` `fight` `fliptext` `hug` `joke` `julio` `kill` `level` `literally` `mock` `profile` `quiz` `rate` `reverse` `rps` `sheug` `slap` `tickle` `wur` `yomama`")
             .addField("Economy", "`daily` `balance` `pay`")

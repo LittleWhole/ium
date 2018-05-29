@@ -14,7 +14,8 @@ let inline = true
         const utilsCommands = fs.readFileSync("./utils.txt", "utf8");
         const funCommands = fs.readFileSync("./fun.txt", "utf8");
         const economyCommands = fs.readFileSync("./economy.txt", "utf8");
-        const mathCommands = fs.readFileSync("./math.txt", "utf8");
+        const mathCommands = fs.readFileSync("./image.txt", "utf8");
+        const mathCommands = fs.readFileSync("./music.txt", "utf8");
       
           const user = message.guild.members.get(args[0]) || message.member;
       
@@ -55,7 +56,12 @@ let inline = true
       
           let mathEmbed = new Discord.RichEmbed()
           .setColor("#FFFFFF")
-          .setTitle("Math Commands")
+          .setTitle("Image Commands")
+          .setDescription(mathCommands)
+
+          let mathEmbed = new Discord.RichEmbed()
+          .setColor("#FFFFFF")
+          .setTitle("Music Commands")
           .setDescription(mathCommands)
       
           user.send(mathEmbed);
