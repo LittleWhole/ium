@@ -7,9 +7,9 @@ module.exports = (bot, member, message) => {
             //Embed Creation
             let memberEmbed = new Discord.RichEmbed()
             .setColor('#90e386')
-            .setTitle(`User Joined`, member.displayAvatarURL)
-            .setDescription(`${member.user.username} - \`${member.user.tag}\` has **joined**`)
+            .setAuthor(`${member.user.tag} (${member.user.id})`, member.user.displayAvatarURL)
             //.setFooter(`${message.guild.memberCount} users`)
+            .setFooter(`User Joined`)
             .setTimestamp();
         
             channel.send(memberEmbed)
