@@ -41,7 +41,6 @@ module.exports = {
     message.channel.send(warnEmbed)
   
     if(warns[wUser.id].warns == 1){
-      message.guild.member(wUser).kick(reason);
       message.reply(`<@${wUser.id}> has been warned. One more warn, and <@${wUser.id}> will me muted.`)
     }
     if(warns[wUser.id].warns == 2){
