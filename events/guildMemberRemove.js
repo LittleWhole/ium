@@ -18,4 +18,4 @@ module.exports = (bot, member, message) => {
 } catch (error) {
   console.error(error);
 }
-  };//eeee
+  };
